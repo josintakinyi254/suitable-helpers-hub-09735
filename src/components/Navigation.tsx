@@ -53,7 +53,7 @@ export const Navigation = () => {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         className={`fixed left-0 right-0 z-50 bg-background/95 backdrop-blur-lg shadow-soft transition-all duration-300 ${
-          scrolled ? 'top-0' : 'top-10'
+          scrolled ? 'top-0' : 'top-8'
         }`}
       >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">

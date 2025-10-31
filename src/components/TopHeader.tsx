@@ -11,11 +11,11 @@ export const TopHeader = ({ scrolled }: TopHeaderProps) => {
 
   return (
     <>
-      <div className={`fixed left-0 right-0 z-50 bg-primary/5 border-b border-primary/10 transition-all duration-300 ${
-        scrolled ? '-top-10 opacity-0' : 'top-0 opacity-100'
+      <div className={`fixed left-0 right-0 z-50 bg-gradient-to-r from-primary/10 via-primary/5 to-secondary/10 backdrop-blur-sm border-b border-primary/20 transition-all duration-300 ${
+        scrolled ? '-top-8 opacity-0' : 'top-0 opacity-100'
       }`}>
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-10 text-xs sm:text-sm">
+          <div className="flex items-center justify-between h-8 text-xs">
             {/* Left - Countries */}
             <button
               onClick={() => setShowCountryModal(true)}

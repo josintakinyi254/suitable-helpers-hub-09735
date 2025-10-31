@@ -5,9 +5,14 @@ import { Users, Building, MessageSquare, Heart, Crown, Shield, Globe, Home } fro
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { ProgramModal } from "./ProgramModal";
-import programsWorkshop from "@/assets/programs-workshop.jpg";
-import heroWomen from "@/assets/hero-women.jpg";
-import founder from "@/assets/founder.jpg";
+import programDaughters from "@/assets/program-daughters.jpg";
+import programBuilders from "@/assets/program-builders.jpg";
+import programDeborah from "@/assets/program-deborah.jpg";
+import programMama from "@/assets/program-mama.jpg";
+import programGrey from "@/assets/program-grey.jpg";
+import programRahab from "@/assets/program-rahab.jpg";
+import programTulishe from "@/assets/program-tulishe.jpg";
+import programVillage from "@/assets/program-village.jpg";
 
 export const Programs = () => {
   const ref = useRef(null);
@@ -20,7 +25,7 @@ export const Programs = () => {
       title: "The Daughters Closet",
       age: "Age: 20 - 35 yrs",
       color: "from-purple-500 to-pink-500",
-      image: programsWorkshop,
+      image: programDaughters,
       details: ["Faith", "Careers", "Relationships and marriage", "Parenting", "Investment", "Company Chaplaincy", "Health and Nutrition"],
     },
     {
@@ -28,7 +33,7 @@ export const Programs = () => {
       title: "Builder's Parade",
       age: "Age: 36 - 65 yrs",
       color: "from-blue-500 to-purple-500",
-      image: heroWomen,
+      image: programBuilders,
       details: ["Faith", "Marriage", "Parenting", "Business Chaplaincy", "Investment", "Education", "Health and Nutrition"],
     },
     {
@@ -36,7 +41,7 @@ export const Programs = () => {
       title: "The Deborah Debate",
       age: "Unlimited",
       color: "from-green-500 to-teal-500",
-      image: founder,
+      image: programDeborah,
       details: ["Empowering women in leadership", "Counsel for the king"],
     },
     {
@@ -44,7 +49,7 @@ export const Programs = () => {
       title: "Mama Help Me Grow",
       age: "Age: 6 - 19 yrs",
       color: "from-pink-500 to-rose-500",
-      image: programsWorkshop,
+      image: programMama,
       details: ["Education", "Faith", "Careers", "Health and Nutrition"],
     },
     {
@@ -52,7 +57,7 @@ export const Programs = () => {
       title: "The Grey Crown",
       age: "Age: 66 & Above",
       color: "from-amber-500 to-orange-500",
-      image: heroWomen,
+      image: programGrey,
       details: ["Faith", "Marriage", "Fellowship", "Training", "Health", "Wellness and Nutrition"],
     },
     {
@@ -60,7 +65,7 @@ export const Programs = () => {
       title: "The Rahab Rescue Mission",
       age: "Unlimited",
       color: "from-red-500 to-pink-500",
-      image: programsWorkshop,
+      image: programRahab,
       details: ["Rescuing the prostitutes", "Giving them access to healthcare", "Lifestyle change program", "Family reunion", "Start-up package"],
     },
     {
@@ -68,7 +73,7 @@ export const Programs = () => {
       title: "Tulishe Taifa Program",
       age: "Community Outreach",
       color: "from-indigo-500 to-blue-500",
-      image: heroWomen,
+      image: programTulishe,
       details: ["Food production", "Value addition", "Granary management", "Distribution", "Operation go green"],
     },
     {
@@ -76,7 +81,7 @@ export const Programs = () => {
       title: "The Suitable Village",
       age: "All Ages",
       color: "from-emerald-500 to-green-500",
-      image: programsWorkshop,
+      image: programVillage,
       details: ["Establish homes for the rescued orphans, prostitutes and vulnerable aged"],
     },
   ];
@@ -118,24 +123,30 @@ export const Programs = () => {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <Card 
-                className="group relative overflow-hidden p-6 h-full shadow-soft hover:shadow-strong transition-all duration-300 bg-card border-border cursor-pointer"
+                className="group relative overflow-hidden h-80 shadow-soft hover:shadow-strong transition-all duration-300 bg-card border-border cursor-pointer"
                 onClick={() => setSelectedProgram(program)}
               >
-                {/* Gradient Background on Hover */}
-                <div className={`absolute inset-0 bg-gradient-to-br ${program.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                {/* Background Image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
+                  style={{ backgroundImage: `url(${program.image})` }}
+                />
                 
-                <div className="relative z-10">
+                {/* Gradient Overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-t ${program.color} opacity-60 group-hover:opacity-75 transition-opacity duration-300`} />
+                
+                <div className="relative z-10 h-full flex flex-col justify-end p-6">
                   {/* Icon */}
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${program.color} flex items-center justify-center mb-4 shadow-soft group-hover:scale-110 transition-transform duration-300`}>
-                    <program.icon className="w-8 h-8 text-white" />
+                  <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 shadow-soft group-hover:scale-110 transition-transform duration-300">
+                    <program.icon className="w-7 h-7 text-white" />
                   </div>
 
                   {/* Content */}
-                  <h3 className="font-display font-bold text-xl mb-2 text-foreground group-hover:text-primary transition-colors">
+                  <h3 className="font-display font-bold text-2xl mb-2 text-white">
                     {program.title}
                   </h3>
-                  <p className="text-sm text-muted-foreground mb-3">{program.age}</p>
-                  <p className="text-xs text-primary font-medium">Click to learn more →</p>
+                  <p className="text-sm text-white/90 mb-3">{program.age}</p>
+                  <p className="text-xs text-white font-medium">Click to learn more →</p>
                 </div>
               </Card>
             </motion.div>

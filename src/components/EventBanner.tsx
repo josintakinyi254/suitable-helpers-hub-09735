@@ -5,6 +5,7 @@ import { Calendar, Clock, MapPin, Mail, Phone, Sparkles } from "lucide-react";
 import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { EventRegistrationForm } from "./EventRegistrationForm";
+import eventConference from "@/assets/event-conference.jpg";
 
 export const EventBanner = () => {
   const ref = useRef(null);
@@ -25,7 +26,16 @@ export const EventBanner = () => {
         >
           <Card className="overflow-hidden shadow-strong border-2 border-primary/20">
             {/* Header Banner */}
-            <div className="gradient-hero p-8 sm:p-12 text-center relative overflow-hidden">
+            <div className="p-8 sm:p-12 text-center relative overflow-hidden min-h-[300px] flex items-center justify-center">
+              {/* Background Image */}
+              <div 
+                className="absolute inset-0 bg-cover bg-center"
+                style={{ backgroundImage: `url(${eventConference})` }}
+              />
+              
+              {/* Gradient Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/90 via-primary/80 to-secondary/70" />
+              
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
