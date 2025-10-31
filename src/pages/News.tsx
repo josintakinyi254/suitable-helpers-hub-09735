@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import heroWomen from "@/assets/hero-women.jpg";
 import programsWorkshop from "@/assets/programs-workshop.jpg";
 import founder from "@/assets/founder.jpg";
+import newsBg from "@/assets/news-bg.jpg";
 
 export default function News() {
   const navigate = useNavigate();
@@ -76,8 +77,14 @@ export default function News() {
       
       <main className="pt-24 pb-20">
         {/* Hero Section */}
-        <section className="gradient-hero text-white py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <section className="text-white py-20 relative overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${newsBg})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-coral/85 via-primary/80 to-teal/75" />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}

@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import donationBg from "@/assets/donation-bg.jpg";
+import { MpesaDonation } from "@/components/MpesaDonation";
 
 export default function Donate() {
   const [amount, setAmount] = useState("");
@@ -23,6 +24,7 @@ export default function Donate() {
   const [bankName, setBankName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [googlePayEmail, setGooglePayEmail] = useState("");
+  const [isMpesaModalOpen, setIsMpesaModalOpen] = useState(false);
   const { toast } = useToast();
 
   const handleDonate = async (e: React.FormEvent) => {
@@ -30,17 +32,8 @@ export default function Donate() {
     setIsLoading(true);
 
     if (donationMethod === "mpesa") {
-      setTimeout(() => {
-        toast({
-          title: "Payment Initiated",
-          description: "Please check your phone for the M-Pesa prompt to complete your donation.",
-        });
-        setIsLoading(false);
-        setAmount("");
-        setPhoneNumber("");
-        setName("");
-        setMessage("");
-      }, 2000);
+      setIsMpesaModalOpen(true);
+      setIsLoading(false);
     } else {
       let emailBody = `Name: ${name}\nAmount: KES ${amount}\nDonation Method: ${donationMethod}\n\n`;
       
@@ -437,6 +430,11 @@ export default function Donate() {
           </div>
         </section>
       </main>
+
+      <MpesaDonation 
+        isOpen={isMpesaModalOpen}
+        onClose={() => setIsMpesaModalOpen(false)}
+      />
 
       <Footer />
     </div>

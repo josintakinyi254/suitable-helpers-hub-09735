@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "./ui/button";
 import { Link } from "react-router-dom";
 import { TopHeader } from "./TopHeader";
+import logo from "@/assets/logo.png";
 
 export const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -59,16 +60,8 @@ export const Navigation = () => {
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 sm:h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 group">
-            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl gradient-primary flex items-center justify-center shadow-soft group-hover:shadow-medium transition-shadow">
-              <span className="text-white font-bold text-lg sm:text-xl font-display">SH</span>
-            </div>
-            <div className="hidden sm:block">
-              <h1 className="font-display font-bold text-base sm:text-lg text-foreground">
-                Suitable Helpers
-              </h1>
-              <p className="text-xs text-muted-foreground">Empowering Women</p>
-            </div>
+          <Link to="/" className="flex items-center group">
+            <img src={logo} alt="Suitable Helpers" className="h-12 sm:h-14 w-auto group-hover:opacity-90 transition-opacity" />
           </Link>
 
           {/* Desktop Menu */}

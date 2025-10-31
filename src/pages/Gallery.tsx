@@ -8,6 +8,7 @@ import { X } from "lucide-react";
 import heroImage from "@/assets/hero-women.jpg";
 import founderImage from "@/assets/founder.jpg";
 import programsImage from "@/assets/programs-workshop.jpg";
+import galleryBg from "@/assets/gallery-bg.jpg";
 
 const galleryImages = [
   {
@@ -85,8 +86,14 @@ const Gallery = () => {
       
       <main className="pt-20">
         {/* Hero Section */}
-        <section className="py-20 sm:py-24 gradient-hero">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <section className="py-20 sm:py-24 relative overflow-hidden">
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${galleryBg})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/85 via-teal/75 to-secondary/80" />
+          
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}

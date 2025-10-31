@@ -57,7 +57,7 @@ export const Hero = () => {
           transition={{ duration: 1, ease: "easeInOut" }}
           className="absolute inset-0 z-0"
         >
-          <div className="absolute inset-0 gradient-hero opacity-90 z-10" />
+          <div className="absolute inset-0 gradient-hero opacity-60 z-10" />
           <img
             src={slides[currentSlide].image}
             alt="Empowered women united in purpose"

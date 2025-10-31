@@ -6,6 +6,7 @@ import { Card } from "./ui/card";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
+import communityBg from "@/assets/community-bg.jpg";
 
 export const Newsletter = () => {
   const ref = useRef(null);
@@ -88,8 +89,15 @@ export const Newsletter = () => {
                 initial={{ opacity: 0, x: 50 }}
                 animate={isInView ? { opacity: 1, x: 0 } : {}}
                 transition={{ duration: 0.6, delay: 0.4 }}
-                className="gradient-hero p-12 flex items-center justify-center relative overflow-hidden"
+                className="p-12 flex items-center justify-center relative overflow-hidden"
               >
+                {/* Background Image */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${communityBg})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-br from-teal/90 via-teal/80 to-primary/80" />
+                
                 {/* Decorative circles */}
                 <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl" />
                 <div className="absolute bottom-0 left-0 w-48 h-48 bg-white/5 rounded-full blur-2xl" />

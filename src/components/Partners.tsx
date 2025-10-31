@@ -1,10 +1,12 @@
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Handshake } from "lucide-react";
+import { PartnerSignupModal } from "./PartnerSignupModal";
 
 export const Partners = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const partners = [
     { name: "Global Faith Network", category: "Ministry Partner" },
@@ -75,16 +77,21 @@ export const Partners = () => {
             <p className="text-muted-foreground mb-6">
               Join us in making a lasting impact. We're always looking for like-minded organizations to collaborate with.
             </p>
-            <a
-              href="mailto:thesuitablehelpers@gmail.com?subject=Partnership Inquiry"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full gradient-primary text-white font-semibold shadow-soft hover:shadow-medium transition-all"
+            <button
+              onClick={() => setIsModalOpen(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-coral hover:bg-coral/90 text-white font-semibold shadow-soft hover:shadow-medium transition-all"
             >
               <Handshake className="w-5 h-5" />
               Partner With Us
-            </a>
+            </button>
           </div>
         </motion.div>
       </div>
+      
+      <PartnerSignupModal 
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+      />
     </section>
   );
 };

@@ -26,6 +26,12 @@ All colors MUST be HSL.
     /* Gold accent for divine wisdom */
     --secondary: 45 93% 58%;
     --secondary-foreground: 240 10% 15%;
+    
+    /* Complementary colors */
+    --teal: 174 62% 47%;
+    --teal-foreground: 0 0% 100%;
+    --coral: 14 91% 65%;
+    --coral-foreground: 0 0% 100%;
 
     --muted: 240 5% 96%;
     --muted-foreground: 240 4% 46%;
@@ -90,6 +96,11 @@ All colors MUST be HSL.
 
     --secondary: 45 90% 60%;
     --secondary-foreground: 240 10% 8%;
+    
+    --teal: 174 58% 52%;
+    --teal-foreground: 0 0% 100%;
+    --coral: 14 88% 70%;
+    --coral-foreground: 240 10% 8%;
 
     --muted: 240 8% 15%;
     --muted-foreground: 240 5% 65%;
