@@ -5,66 +5,59 @@ import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { Card } from "@/components/ui/card";
 import { X } from "lucide-react";
-import heroImage from "@/assets/hero-women.jpg";
-import founderImage from "@/assets/founder.jpg";
-import programsImage from "@/assets/programs-workshop.jpg";
 import galleryBg from "@/assets/gallery-bg.jpg";
+import heroSlide1 from "@/assets/hero-slide-1.jpg";
+import heroSlide2 from "@/assets/hero-slide-2.jpg";
+import heroSlide3 from "@/assets/hero-slide-3.jpg";
+import heroSlide4 from "@/assets/hero-slide-4.jpg";
+import heroSlide5 from "@/assets/hero-slide-5.jpg";
+import gallery1 from "@/assets/gallery-1.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery3 from "@/assets/gallery-3.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
+import founder from "@/assets/founder.jpg";
+import heroWomen from "@/assets/hero-women.jpg";
+import programsWorkshop from "@/assets/programs-workshop.jpg";
+import transformAfter from "@/assets/transform-after.jpg";
+import transformBefore from "@/assets/transform-before.jpg";
+import eventConference from "@/assets/event-conference.jpg";
+import donationBg from "@/assets/donation-bg.jpg";
+import communityBg from "@/assets/community-bg.jpg";
+import programVillage from "@/assets/program-village.jpg";
+import programGrey from "@/assets/program-grey.jpg";
+import programMama from "@/assets/program-mama.jpg";
+import programBuilders from "@/assets/program-builders.jpg";
+import programDaughters from "@/assets/program-daughters.jpg";
+import programDeborah from "@/assets/program-deborah.jpg";
+import programRahab from "@/assets/program-rahab.jpg";
+import programTulishe from "@/assets/program-tulishe.jpg";
 
 const galleryImages = [
-  {
-    id: 1,
-    src: heroImage,
-    title: "Women's Empowerment Conference",
-    category: "Events",
-  },
-  {
-    id: 2,
-    src: founderImage,
-    title: "Leadership Training",
-    category: "Programs",
-  },
-  {
-    id: 3,
-    src: programsImage,
-    title: "Community Outreach",
-    category: "Outreach",
-  },
-  {
-    id: 4,
-    src: heroImage,
-    title: "Prayer Workshop",
-    category: "Workshops",
-  },
-  {
-    id: 5,
-    src: founderImage,
-    title: "Youth Mentorship",
-    category: "Programs",
-  },
-  {
-    id: 6,
-    src: programsImage,
-    title: "Annual Gathering",
-    category: "Events",
-  },
-  {
-    id: 7,
-    src: heroImage,
-    title: "Business Training",
-    category: "Workshops",
-  },
-  {
-    id: 8,
-    src: founderImage,
-    title: "Community Service",
-    category: "Outreach",
-  },
-  {
-    id: 9,
-    src: programsImage,
-    title: "Faith Conference",
-    category: "Events",
-  },
+  { id: 1, src: heroSlide1, title: "Women's Empowerment Conference", category: "Events" },
+  { id: 2, src: heroSlide2, title: "Anniversary Celebration", category: "Events" },
+  { id: 3, src: heroSlide3, title: "Community Gathering", category: "Events" },
+  { id: 4, src: heroSlide4, title: "Worship Service", category: "Events" },
+  { id: 5, src: heroSlide5, title: "Ministry Outreach", category: "Outreach" },
+  { id: 6, src: gallery1, title: "Women's Fellowship", category: "Programs" },
+  { id: 7, src: gallery2, title: "Community Service", category: "Outreach" },
+  { id: 8, src: gallery3, title: "Youth Mentorship", category: "Programs" },
+  { id: 9, src: gallery4, title: "Leadership Training", category: "Workshops" },
+  { id: 10, src: founder, title: "Founder's Vision", category: "Programs" },
+  { id: 11, src: heroWomen, title: "Women of Faith", category: "Events" },
+  { id: 12, src: programsWorkshop, title: "Skills Workshop", category: "Workshops" },
+  { id: 13, src: transformAfter, title: "Transformed Lives", category: "Outreach" },
+  { id: 14, src: transformBefore, title: "Community Impact", category: "Outreach" },
+  { id: 15, src: eventConference, title: "Annual Conference", category: "Events" },
+  { id: 16, src: donationBg, title: "Giving Back", category: "Outreach" },
+  { id: 17, src: communityBg, title: "Building Community", category: "Outreach" },
+  { id: 18, src: programVillage, title: "Village Women Program", category: "Programs" },
+  { id: 19, src: programGrey, title: "Grey Women Initiative", category: "Programs" },
+  { id: 20, src: programMama, title: "Mama Pima Program", category: "Programs" },
+  { id: 21, src: programBuilders, title: "Women Builders", category: "Programs" },
+  { id: 22, src: programDaughters, title: "Daughters of Destiny", category: "Programs" },
+  { id: 23, src: programDeborah, title: "Deborah's Daughters", category: "Programs" },
+  { id: 24, src: programRahab, title: "Rahab's Hope", category: "Programs" },
+  { id: 25, src: programTulishe, title: "Tulishe Mkono", category: "Programs" },
 ];
 
 const categories = ["All", "Events", "Programs", "Workshops", "Outreach"];
