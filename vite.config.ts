@@ -18,9 +18,10 @@ export default defineConfig(({ mode }) => ({
   },
   plugins: [
     react({
-      jsxRuntime: 'automatic',
-      jsxImportSource: 'react',
-      development: true,
+      tsDecorators: true,
+      plugins: [
+        ['@babel/plugin-transform-react-jsx', { runtime: 'automatic' }]
+      ]
     }), 
     mode === "development" && componentTagger()
   ].filter(Boolean),
