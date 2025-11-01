@@ -6,10 +6,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    // Enable the new JSX transform. Use 'react-jsxdev' for development builds;
-    // change to 'react-jsx' for production-like builds if desired.
-    "jsx": "react-jsxdev",
-    "jsxImportSource": "react",
+    "jsx": "preserve",
     "noImplicitAny": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
