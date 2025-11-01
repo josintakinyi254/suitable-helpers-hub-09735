@@ -16,7 +16,14 @@ export default defineConfig(({ mode }) => ({
   preview: {
     host: "suitable-helpers-hub-09735.onrender.com",
   },
-  plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
+  plugins: [
+    react({
+      jsxRuntime: 'automatic',
+      jsxImportSource: 'react',
+      development: true,
+    }), 
+    mode === "development" && componentTagger()
+  ].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
