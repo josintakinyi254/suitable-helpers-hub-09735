@@ -2,25 +2,39 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 import { useState, useEffect } from "react";
-import heroImage from "@/assets/hero-women.jpg";
-import founderImage from "@/assets/founder.jpg";
-import programsImage from "@/assets/programs-workshop.jpg";
+import heroSlide1 from "@/assets/hero-slide-1.jpg";
+import heroSlide2 from "@/assets/hero-slide-2.jpg";
+import heroSlide3 from "@/assets/hero-slide-3.jpg";
+import heroSlide4 from "@/assets/hero-slide-4.jpg";
+import heroSlide5 from "@/assets/hero-slide-5.jpg";
 
 const slides = [
   {
-    image: heroImage,
+    image: heroSlide1,
     title: "Awaken The Women To Their",
     highlight: "God Given Mandate",
     description: "Through teaching women to fear God, we bring them to the realization of who they are and the power vested in them, equipping them to prosper for the enrichment of the family unit and Kingdom expansion.",
   },
   {
-    image: founderImage,
+    image: heroSlide2,
     title: "Empowering Women Through",
     highlight: "Faith & Purpose",
     description: "Join us in a transformative journey where women discover their divine calling and unlock their full potential in service to God and community.",
   },
   {
-    image: programsImage,
+    image: heroSlide3,
+    title: "Building Strong",
+    highlight: "Kingdom Leaders",
+    description: "Witness the transformation as women step into their God-given roles with confidence and purpose.",
+  },
+  {
+    image: heroSlide4,
+    title: "Expanding God's Kingdom",
+    highlight: "Together",
+    description: "Join a community of women committed to making a lasting impact for the Kingdom.",
+  },
+  {
+    image: heroSlide5,
     title: "Transform Your Life With",
     highlight: "Our Programs",
     description: "Experience life-changing workshops, seminars, and conferences designed to equip you with the tools for spiritual and personal growth.",
