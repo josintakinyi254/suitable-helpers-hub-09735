@@ -29,32 +29,33 @@ export default function Donate() {
 
   const handleDonate = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-
+    
     if (donationMethod === "mpesa") {
       setIsMpesaModalOpen(true);
-      setIsLoading(false);
-    } else {
-      let emailBody = `Name: ${name}\nAmount: KES ${amount}\nDonation Method: ${donationMethod}\n\n`;
-      
-      if (donationMethod === "paypal") {
-        emailBody += `PayPal Email: ${paypalEmail}\n\n`;
-      } else if (donationMethod === "bank") {
-        emailBody += `Bank Name: ${bankName}\nAccount Number: ${accountNumber}\n\n`;
-      } else if (donationMethod === "googlepay") {
-        emailBody += `Google Pay Email: ${googlePayEmail}\n\n`;
-      }
-      
-      emailBody += `Message:\n${message}`;
-      
-      const mailtoLink = `mailto:thesuitablehelpers@gmail.com?subject=Donation via ${donationMethod}&body=${encodeURIComponent(emailBody)}`;
-      window.location.href = mailtoLink;
-      toast({
-        title: "Opening Email",
-        description: "We'll confirm your donation details shortly.",
-      });
-      setIsLoading(false);
+      return;
     }
+    
+    setIsLoading(true);
+    
+    let emailBody = `Name: ${name}\nAmount: KES ${amount}\nDonation Method: ${donationMethod}\n\n`;
+    
+    if (donationMethod === "paypal") {
+      emailBody += `PayPal Email: ${paypalEmail}\n\n`;
+    } else if (donationMethod === "bank") {
+      emailBody += `Bank Name: ${bankName}\nAccount Number: ${accountNumber}\n\n`;
+    } else if (donationMethod === "googlepay") {
+      emailBody += `Google Pay Email: ${googlePayEmail}\n\n`;
+    }
+    
+    emailBody += `Message:\n${message}`;
+    
+    const mailtoLink = `mailto:thesuitablehelpers@gmail.com?subject=Donation via ${donationMethod}&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
+    toast({
+      title: "Opening Email",
+      description: "We'll confirm your donation details shortly.",
+    });
+    setIsLoading(false);
   };
 
   const presetAmounts = [500, 1000, 2500, 5000, 10000];
@@ -269,25 +270,6 @@ export default function Donate() {
                 </div>
 
                 {/* Payment Details based on method */}
-                {donationMethod === "mpesa" && (
-                  <div>
-                    <Label htmlFor="phone">M-Pesa Phone Number</Label>
-                    <Input
-                      id="phone"
-                      type="tel"
-                      placeholder="254712345678"
-                      value={phoneNumber}
-                      onChange={(e) => setPhoneNumber(e.target.value)}
-                      required
-                      pattern="[0-9]{12}"
-                      className="mt-2"
-                    />
-                    <p className="text-xs text-muted-foreground mt-1">
-                      Format: 254XXXXXXXXX (without +)
-                    </p>
-                  </div>
-                )}
-
                 {donationMethod === "paypal" && (
                   <div>
                     <Label htmlFor="paypalEmail">PayPal Email Address</Label>
@@ -351,32 +333,36 @@ export default function Donate() {
                   </div>
                 )}
 
-                {/* Name */}
-                <div>
-                  <Label htmlFor="name">Your Name</Label>
-                  <Input
-                    id="name"
-                    type="text"
-                    placeholder="John Doe"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    required
-                    className="mt-2"
-                  />
-                </div>
+                {donationMethod !== "mpesa" && (
+                  <>
+                    {/* Name */}
+                    <div>
+                      <Label htmlFor="name">Your Name</Label>
+                      <Input
+                        id="name"
+                        type="text"
+                        placeholder="John Doe"
+                        value={name}
+                        onChange={(e) => setName(e.target.value)}
+                        required
+                        className="mt-2"
+                      />
+                    </div>
 
-                {/* Message */}
-                <div>
-                  <Label htmlFor="message">Message (Optional)</Label>
-                  <Textarea
-                    id="message"
-                    placeholder="Share why you're supporting our mission..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="mt-2"
-                    rows={4}
-                  />
-                </div>
+                    {/* Message */}
+                    <div>
+                      <Label htmlFor="message">Message (Optional)</Label>
+                      <Textarea
+                        id="message"
+                        placeholder="Share why you're supporting our mission..."
+                        value={message}
+                        onChange={(e) => setMessage(e.target.value)}
+                        className="mt-2"
+                        rows={4}
+                      />
+                    </div>
+                  </>
+                )}
 
                 <Button
                   type="submit"
@@ -385,7 +371,7 @@ export default function Donate() {
                   className="w-full gradient-primary shadow-medium hover:shadow-strong text-lg font-semibold py-6"
                 >
                   <Heart className="w-5 h-5 mr-2" />
-                  {isLoading ? "Processing..." : donationMethod === "mpesa" ? "Complete Donation" : "Submit Donation Request"}
+                  {donationMethod === "mpesa" ? "Proceed to M-Pesa" : isLoading ? "Processing..." : "Submit Donation Request"}
                 </Button>
               </form>
 

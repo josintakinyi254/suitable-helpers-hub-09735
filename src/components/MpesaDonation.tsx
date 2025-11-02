@@ -36,26 +36,24 @@ export const MpesaDonation = ({ isOpen, onClose }: MpesaDonationProps) => {
       return;
     }
 
-    // This is where the STK push would be initiated
-    // For now, just show a message that backend integration is needed
-    toast.info("M-Pesa integration ready. Backend setup required to process payments.");
-    
-    // Store the credentials for backend integration
-    const mpesaConfig = {
-      consumerKey: 'LH2KKnGyoh13ypzeHeLHgS3DPIMqeghx3Wtaln5x0E01PAo0',
-      consumerSecret: 'bmikI685wDL4CGCkjEpHb047U1jMKcAMRFotWhTXP7iGuavOLXySjn3vVU2vVG9Z',
-      businessShortCode: '174379',
-      passkey: 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919',
-      callbackUrl: 'https://ebenezerhappyhome.org//callback_url.php',
-      accountReference: '2255',
-      transactionDesc: 'Donation to Suitable Helpers Ministry'
-    };
+    // Create email with M-Pesa donation details
+    const emailBody = `M-Pesa Donation Request
 
-    console.log('M-Pesa Payment Details:', {
-      amount,
-      phone,
-      config: mpesaConfig
-    });
+Amount: KES ${amount}
+Phone Number: ${phone}
+Donation Method: M-Pesa
+
+M-Pesa Configuration:
+Business Short Code: 174379
+Account Reference: 2255
+Transaction Description: Donation to Suitable Helpers Ministry
+
+Please process this M-Pesa donation request.`;
+
+    const mailtoLink = `mailto:thesuitablehelpers@gmail.com?subject=M-Pesa Donation - KES ${amount}&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
+    
+    toast.success("Opening email client with your donation details");
 
     // Clear form
     setAmount("");
@@ -120,8 +118,8 @@ export const MpesaDonation = ({ isOpen, onClose }: MpesaDonationProps) => {
 
         <div className="mt-4 p-4 bg-muted/50 rounded-lg">
           <p className="text-xs text-muted-foreground">
-            <strong>Note:</strong> You will receive an M-Pesa prompt on your phone to complete the transaction.
-            Backend integration required to process live payments.
+            <strong>Note:</strong> After submitting, you'll be redirected to your email client. 
+            Send the email to complete your M-Pesa donation request, and we'll process it promptly.
           </p>
         </div>
       </DialogContent>
