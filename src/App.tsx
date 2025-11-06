@@ -6,6 +6,8 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import Index from "./pages/Index";
 import Donate from "./pages/Donate";
+import Programs from "./pages/Programs";
+import ContactUs from "./pages/ContactUs";
 import News from "./pages/News";
 import NewsArticle from "./pages/NewsArticle";
 import Shop from "./pages/Shop";
@@ -26,6 +28,8 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/donate" element={<Donate />} />
+            <Route path="/programs" element={<Programs />} />
+            <Route path="/contact" element={<ContactUs />} />
             <Route path="/news" element={<News />} />
             <Route path="/news/:id" element={<NewsArticle />} />
             <Route path="/shop" element={<Shop />} />

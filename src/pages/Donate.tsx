@@ -6,59 +6,91 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Heart, Shield, Users, Sparkles, CreditCard, Package, Smartphone, Wallet } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
+import { Heart, Shield, Users, Sparkles, CheckCircle2 } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import donationBg from "@/assets/donation-bg.jpg";
 import { MpesaDonation } from "@/components/MpesaDonation";
+import { Steps } from "@/components/ui/steps";
+import { toast } from "sonner";
 
 export default function Donate() {
+  const [currentStep, setCurrentStep] = useState(1);
   const [amount, setAmount] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [name, setName] = useState("");
-  const [message, setMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [donationMethod, setDonationMethod] = useState("mpesa");
-  const [paypalEmail, setPaypalEmail] = useState("");
-  const [bankName, setBankName] = useState("");
-  const [accountNumber, setAccountNumber] = useState("");
-  const [googlePayEmail, setGooglePayEmail] = useState("");
+  const [currency, setCurrency] = useState("USD");
   const [isMpesaModalOpen, setIsMpesaModalOpen] = useState(false);
-  const { toast } = useToast();
+  
+  const [donorInfo, setDonorInfo] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    country: "Kenya",
+    state: "",
+    postcode: "",
+    message: "",
+  });
 
-  const handleDonate = async (e: React.FormEvent) => {
-    e.preventDefault();
-    
-    if (donationMethod === "mpesa") {
-      setIsMpesaModalOpen(true);
+  const presetAmounts = [50, 100, 250, 500, 1000];
+
+  const steps = [
+    { number: 1, label: "Amount" },
+    { number: 2, label: "Details" },
+    { number: 3, label: "Payment" },
+  ];
+
+  const handleNextStep = () => {
+    if (currentStep === 1 && !amount) {
+      toast.error("Please enter a donation amount");
       return;
     }
-    
-    setIsLoading(true);
-    
-    let emailBody = `Name: ${name}\nAmount: KES ${amount}\nDonation Method: ${donationMethod}\n\n`;
-    
-    if (donationMethod === "paypal") {
-      emailBody += `PayPal Email: ${paypalEmail}\n\n`;
-    } else if (donationMethod === "bank") {
-      emailBody += `Bank Name: ${bankName}\nAccount Number: ${accountNumber}\n\n`;
-    } else if (donationMethod === "googlepay") {
-      emailBody += `Google Pay Email: ${googlePayEmail}\n\n`;
+    if (currentStep === 2) {
+      if (!donorInfo.firstName || !donorInfo.lastName || !donorInfo.email || !donorInfo.phone) {
+        toast.error("Please fill in all required fields");
+        return;
+      }
     }
-    
-    emailBody += `Message:\n${message}`;
-    
-    const mailtoLink = `mailto:thesuitablehelpers@gmail.com?subject=Donation via ${donationMethod}&body=${encodeURIComponent(emailBody)}`;
-    window.location.href = mailtoLink;
-    toast({
-      title: "Opening Email",
-      description: "We'll confirm your donation details shortly.",
-    });
-    setIsLoading(false);
+    setCurrentStep((prev) => Math.min(prev + 1, 3));
   };
 
-  const presetAmounts = [500, 1000, 2500, 5000, 10000];
+  const handlePrevStep = () => {
+    setCurrentStep((prev) => Math.max(prev - 1, 1));
+  };
+
+  const handleMpesaDonate = () => {
+    if (!donorInfo.firstName || !donorInfo.email || !amount) {
+      toast.error("Please complete all steps first");
+      return;
+    }
+    setIsMpesaModalOpen(true);
+  };
+
+  const handleOtherPayment = (method: string) => {
+    const emailBody = `
+Donation Request
+
+Donor Information:
+Name: ${donorInfo.firstName} ${donorInfo.lastName}
+Email: ${donorInfo.email}
+Phone: ${donorInfo.phone}
+Country: ${donorInfo.country}
+State/County: ${donorInfo.state}
+Postcode: ${donorInfo.postcode}
+
+Donation Details:
+Amount: ${currency} ${amount}
+Payment Method: ${method}
+
+Message:
+${donorInfo.message}
+
+Please process this donation request and send payment instructions.
+    `.trim();
+
+    const mailtoLink = `mailto:thesuitablehelpers@gmail.com?subject=Donation Request - ${method}&body=${encodeURIComponent(emailBody)}`;
+    window.location.href = mailtoLink;
+    toast.success("Opening your email client...");
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -66,33 +98,27 @@ export default function Donate() {
       
       <main className="pt-[132px] pb-20">
         {/* Hero Section */}
-        <section className="relative py-20 overflow-hidden">
-          <div className="absolute inset-0">
-            <img src={donationBg} alt="Donation background" className="w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/70" />
-          </div>
+        <section className="relative py-20 overflow-hidden bg-gradient-to-br from-orange-50 via-white to-green-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
+              className="max-w-4xl mx-auto"
             >
-              <Heart className="w-16 h-16 mx-auto mb-6 text-white" />
-              <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl mb-6 text-white">
-                Support Our Mission
+              <span className="inline-block px-4 py-2 rounded-full bg-orange-100 text-orange-700 font-semibold text-sm mb-4 uppercase tracking-wide">
+                Share Your Love
+              </span>
+              <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl mb-6 text-foreground">
+                Your Gift Makes our Ministry Possible!
               </h1>
-              <p className="text-lg sm:text-xl max-w-3xl mx-auto text-white/90 mb-8">
-                Your generous donation helps empower women across communities, 
-                providing resources, training, and support for lasting transformation.
+              <p className="text-lg sm:text-xl text-muted-foreground mb-4">
+                Because of <span className="font-semibold text-orange-600">You</span>, African Enterprise is able to spread the Gospel across Africa.
               </p>
-              <div className="max-w-2xl mx-auto bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/20">
-                <p className="text-white text-lg font-semibold mb-2">
-                  "Every gift, no matter the size, creates ripples of hope and transformation."
-                </p>
-                <p className="text-white/80 text-sm">
-                  Your donation directly impacts lives through education, mentorship, and spiritual support.
-                </p>
-              </div>
+              <p className="text-base text-muted-foreground">
+                Over 60 years of ministry, we've reached millions of people and we've only just begun. 
+                Give to AE and see lives transformed every day all over Africa.
+              </p>
             </motion.div>
           </div>
         </section>
@@ -105,324 +131,376 @@ export default function Donate() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1 }}
-                className="bg-card rounded-2xl p-6 text-center shadow-soft"
+                className="bg-card rounded-2xl p-6 text-center shadow-soft border-2 border-transparent hover:border-green-200 transition-colors"
               >
-                <Users className="w-10 h-10 text-primary mx-auto mb-3" />
-                <h3 className="font-display font-bold text-3xl text-foreground mb-2">1,200+</h3>
-                <p className="text-muted-foreground">Women Empowered</p>
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Shield className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-display font-bold text-xl text-foreground mb-1">Secure</h3>
+                <p className="text-muted-foreground text-sm">All transactions are encrypted</p>
               </motion.div>
               
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="bg-card rounded-2xl p-6 text-center shadow-soft"
+                className="bg-card rounded-2xl p-6 text-center shadow-soft border-2 border-transparent hover:border-green-200 transition-colors"
               >
-                <Sparkles className="w-10 h-10 text-primary mx-auto mb-3" />
-                <h3 className="font-display font-bold text-3xl text-foreground mb-2">8</h3>
-                <p className="text-muted-foreground">Active Programs</p>
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <CheckCircle2 className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-display font-bold text-xl text-foreground mb-1">Transparent</h3>
+                <p className="text-muted-foreground text-sm">Every penny accounted for</p>
               </motion.div>
               
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className="bg-card rounded-2xl p-6 text-center shadow-soft"
+                className="bg-card rounded-2xl p-6 text-center shadow-soft border-2 border-transparent hover:border-green-200 transition-colors"
               >
-                <Shield className="w-10 h-10 text-primary mx-auto mb-3" />
-                <h3 className="font-display font-bold text-3xl text-foreground mb-2">100%</h3>
-                <p className="text-muted-foreground">Transparent Use</p>
+                <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-3">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <h3 className="font-display font-bold text-xl text-foreground mb-1">Impactful</h3>
+                <p className="text-muted-foreground text-sm">Transform lives today</p>
               </motion.div>
             </div>
           </div>
         </section>
 
-        {/* Donation Form */}
-        <section className="py-20 relative overflow-hidden">
-          {/* Background Decorative Icons */}
-          <div className="absolute inset-0 overflow-hidden opacity-5 pointer-events-none">
-            <svg className="absolute top-20 left-10 w-64 h-64 text-primary" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
-            </svg>
-            <svg className="absolute bottom-20 right-10 w-96 h-96 text-primary" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-            </svg>
-          </div>
-          
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl relative z-10">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="bg-card/95 backdrop-blur-sm rounded-3xl shadow-strong p-8 md:p-12 border border-border"
-            >
+        {/* Multi-Step Donation Form */}
+        <section className="py-20">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <Card className="p-8 md:p-12 border-4 border-orange-500 rounded-3xl shadow-strong">
+              {/* Header */}
               <div className="text-center mb-8">
-                <Heart className="w-12 h-12 text-primary mx-auto mb-4" />
-                <h2 className="font-display font-bold text-3xl sm:text-4xl text-foreground mb-3">
-                  Make a Donation
+                <h2 className="font-display font-bold text-3xl text-green-700 mb-2">
+                  MAKE A DONATION
                 </h2>
-                <p className="text-muted-foreground text-lg">
-                  Choose your preferred donation method and help empower women
-                </p>
+                <div className="flex items-center justify-center gap-2 mb-6">
+                  <Select value={currency} onValueChange={setCurrency}>
+                    <SelectTrigger className="w-24">
+                      <SelectValue />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="USD">USD</SelectItem>
+                      <SelectItem value="KES">KES</SelectItem>
+                      <SelectItem value="EUR">EUR</SelectItem>
+                      <SelectItem value="GBP">GBP</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
 
-              <form onSubmit={handleDonate} className="space-y-6">
-                {/* Donation Method Selection */}
-                <div>
-                  <Label className="mb-3 block">Donation Method</Label>
-                  <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                    <button
-                      type="button"
-                      onClick={() => setDonationMethod("mpesa")}
-                      className={`p-4 rounded-xl font-semibold transition-all flex flex-col items-center gap-2 ${
-                        donationMethod === "mpesa"
-                          ? "gradient-primary text-white shadow-medium"
-                          : "bg-muted text-foreground hover:bg-accent"
-                      }`}
-                    >
-                      <Smartphone className="w-6 h-6" />
-                      M-Pesa
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDonationMethod("paypal")}
-                      className={`p-4 rounded-xl font-semibold transition-all flex flex-col items-center gap-2 ${
-                        donationMethod === "paypal"
-                          ? "gradient-primary text-white shadow-medium"
-                          : "bg-muted text-foreground hover:bg-accent"
-                      }`}
-                    >
-                      <CreditCard className="w-6 h-6" />
-                      PayPal
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDonationMethod("bank")}
-                      className={`p-4 rounded-xl font-semibold transition-all flex flex-col items-center gap-2 ${
-                        donationMethod === "bank"
-                          ? "gradient-primary text-white shadow-medium"
-                          : "bg-muted text-foreground hover:bg-accent"
-                      }`}
-                    >
-                      <CreditCard className="w-6 h-6" />
-                      Bank
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDonationMethod("googlepay")}
-                      className={`p-4 rounded-xl font-semibold transition-all flex flex-col items-center gap-2 ${
-                        donationMethod === "googlepay"
-                          ? "gradient-primary text-white shadow-medium"
-                          : "bg-muted text-foreground hover:bg-accent"
-                      }`}
-                    >
-                      <Wallet className="w-6 h-6" />
-                      Google Pay
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setDonationMethod("physical")}
-                      className={`p-4 rounded-xl font-semibold transition-all flex flex-col items-center gap-2 ${
-                        donationMethod === "physical"
-                          ? "gradient-primary text-white shadow-medium"
-                          : "bg-muted text-foreground hover:bg-accent"
-                      }`}
-                    >
-                      <Package className="w-6 h-6" />
-                      Physical
-                    </button>
-                  </div>
-                </div>
-                {/* Preset Amounts */}
-                <div>
-                  <Label className="mb-3 block">Select Amount (KES)</Label>
-                  <div className="grid grid-cols-3 sm:grid-cols-5 gap-3">
-                    {presetAmounts.map((preset) => (
-                      <button
-                        key={preset}
-                        type="button"
-                        onClick={() => setAmount(preset.toString())}
-                        className={`py-3 px-4 rounded-xl font-semibold transition-all ${
-                          amount === preset.toString()
-                            ? "gradient-primary text-white shadow-medium"
-                            : "bg-muted text-foreground hover:bg-accent"
-                        }`}
-                      >
-                        {preset.toLocaleString()}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+              {/* Progress Steps */}
+              <Steps steps={steps} currentStep={currentStep} />
 
-                {/* Custom Amount */}
-                <div>
-                  <Label htmlFor="amount">Custom Amount (KES)</Label>
-                  <Input
-                    id="amount"
-                    type="number"
-                    placeholder="Enter amount"
-                    value={amount}
-                    onChange={(e) => setAmount(e.target.value)}
-                    required
-                    min="1"
-                    className="mt-2"
-                  />
-                </div>
-
-                {/* Payment Details based on method */}
-                {donationMethod === "paypal" && (
-                  <div>
-                    <Label htmlFor="paypalEmail">PayPal Email Address</Label>
-                    <Input
-                      id="paypalEmail"
-                      type="email"
-                      placeholder="your.email@example.com"
-                      value={paypalEmail}
-                      onChange={(e) => setPaypalEmail(e.target.value)}
-                      required
-                      className="mt-2"
-                    />
-                  </div>
-                )}
-
-                {donationMethod === "bank" && (
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="bankName">Bank Name</Label>
-                      <Select value={bankName} onValueChange={setBankName} required>
-                        <SelectTrigger className="mt-2">
-                          <SelectValue placeholder="Select your bank" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="kcb">KCB Bank</SelectItem>
-                          <SelectItem value="equity">Equity Bank</SelectItem>
-                          <SelectItem value="coop">Co-operative Bank</SelectItem>
-                          <SelectItem value="absa">Absa Bank</SelectItem>
-                          <SelectItem value="stanbic">Stanbic Bank</SelectItem>
-                          <SelectItem value="other">Other</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-                    <div>
-                      <Label htmlFor="accountNumber">Account Number</Label>
-                      <Input
-                        id="accountNumber"
-                        type="text"
-                        placeholder="Your account number"
-                        value={accountNumber}
-                        onChange={(e) => setAccountNumber(e.target.value)}
-                        required
-                        className="mt-2"
-                      />
-                    </div>
-                  </div>
-                )}
-
-                {donationMethod === "googlepay" && (
-                  <div>
-                    <Label htmlFor="googlePayEmail">Google Pay Email/Phone</Label>
-                    <Input
-                      id="googlePayEmail"
-                      type="text"
-                      placeholder="your.email@gmail.com or phone number"
-                      value={googlePayEmail}
-                      onChange={(e) => setGooglePayEmail(e.target.value)}
-                      required
-                      className="mt-2"
-                    />
-                  </div>
-                )}
-
-                {donationMethod !== "mpesa" && (
-                  <>
-                    {/* Name */}
-                    <div>
-                      <Label htmlFor="name">Your Name</Label>
-                      <Input
-                        id="name"
-                        type="text"
-                        placeholder="John Doe"
-                        value={name}
-                        onChange={(e) => setName(e.target.value)}
-                        required
-                        className="mt-2"
-                      />
-                    </div>
-
-                    {/* Message */}
-                    <div>
-                      <Label htmlFor="message">Message (Optional)</Label>
-                      <Textarea
-                        id="message"
-                        placeholder="Share why you're supporting our mission..."
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        className="mt-2"
-                        rows={4}
-                      />
-                    </div>
-                  </>
-                )}
-
-                <Button
-                  type="submit"
-                  size="lg"
-                  disabled={isLoading}
-                  className="w-full gradient-primary shadow-medium hover:shadow-strong text-lg font-semibold py-6"
+              {/* Step 1: Amount */}
+              {currentStep === 1 && (
+                <motion.div
+                  key="step1"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
                 >
-                  <Heart className="w-5 h-5 mr-2" />
-                  {donationMethod === "mpesa" ? "Proceed to M-Pesa" : isLoading ? "Processing..." : "Submit Donation Request"}
-                </Button>
-              </form>
-
-              <div className="mt-8 p-6 bg-primary/5 rounded-xl border border-primary/20">
-                <div className="flex items-start gap-3">
-                  <Shield className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
-                  <div>
-                    <p className="text-sm font-semibold text-foreground mb-1">
-                      {donationMethod === "mpesa" ? "Secure Payment" : "We're Here to Help"}
-                    </p>
-                    <p className="text-xs text-muted-foreground">
-                      {donationMethod === "mpesa" 
-                        ? "Your donation is secure and encrypted. A receipt will be sent to your phone via SMS."
-                        : "Our team will contact you within 24 hours with payment instructions and confirmation for your generous donation."}
+                  <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 text-center">
+                    <p className="text-blue-800 text-sm">
+                      🔄 Returning donor?{" "}
+                      <button className="font-semibold underline hover:no-underline">
+                        Click here to login
+                      </button>
                     </p>
                   </div>
-                </div>
-              </div>
-            </motion.div>
+
+                  <div>
+                    <Label className="text-base mb-3 block">Select Amount</Label>
+                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                      {presetAmounts.map((preset) => (
+                        <button
+                          key={preset}
+                          type="button"
+                          onClick={() => setAmount(preset.toString())}
+                          className={`py-4 px-4 rounded-xl font-semibold transition-all border-2 ${
+                            amount === preset.toString()
+                              ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white border-orange-500 shadow-medium"
+                              : "bg-white border-gray-200 text-foreground hover:border-orange-300"
+                          }`}
+                        >
+                          {currency} {preset}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="customAmount">Or Enter Custom Amount</Label>
+                    <Input
+                      id="customAmount"
+                      type="number"
+                      placeholder={`Enter ${currency} amount`}
+                      value={amount}
+                      onChange={(e) => setAmount(e.target.value)}
+                      className="mt-2 h-12 text-lg"
+                      min="1"
+                    />
+                  </div>
+
+                  <Button
+                    onClick={handleNextStep}
+                    size="lg"
+                    className="w-full bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white shadow-medium text-lg py-6"
+                  >
+                    Continue to Details
+                  </Button>
+                </motion.div>
+              )}
+
+              {/* Step 2: Donor Information */}
+              {currentStep === 2 && (
+                <motion.div
+                  key="step2"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
+                >
+                  <h3 className="font-display font-bold text-2xl text-center mb-6">Donor Information</h3>
+                  
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="firstName">First Name *</Label>
+                      <Input
+                        id="firstName"
+                        value={donorInfo.firstName}
+                        onChange={(e) => setDonorInfo({ ...donorInfo, firstName: e.target.value })}
+                        className="mt-1"
+                        required
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="lastName">Last Name *</Label>
+                      <Input
+                        id="lastName"
+                        value={donorInfo.lastName}
+                        onChange={(e) => setDonorInfo({ ...donorInfo, lastName: e.target.value })}
+                        className="mt-1"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="email">Email *</Label>
+                    <Input
+                      id="email"
+                      type="email"
+                      value={donorInfo.email}
+                      onChange={(e) => setDonorInfo({ ...donorInfo, email: e.target.value })}
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="phone">Phone *</Label>
+                    <Input
+                      id="phone"
+                      type="tel"
+                      value={donorInfo.phone}
+                      onChange={(e) => setDonorInfo({ ...donorInfo, phone: e.target.value })}
+                      className="mt-1"
+                      required
+                    />
+                  </div>
+
+                  <div>
+                    <Label htmlFor="country">Country</Label>
+                    <Select value={donorInfo.country} onValueChange={(value) => setDonorInfo({ ...donorInfo, country: value })}>
+                      <SelectTrigger className="mt-1">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="Kenya">Kenya</SelectItem>
+                        <SelectItem value="Uganda">Uganda</SelectItem>
+                        <SelectItem value="Tanzania">Tanzania</SelectItem>
+                        <SelectItem value="USA">United States</SelectItem>
+                        <SelectItem value="UK">United Kingdom</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    <div>
+                      <Label htmlFor="state">State / County</Label>
+                      <Input
+                        id="state"
+                        value={donorInfo.state}
+                        onChange={(e) => setDonorInfo({ ...donorInfo, state: e.target.value })}
+                        className="mt-1"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="postcode">Postcode / ZIP</Label>
+                      <Input
+                        id="postcode"
+                        value={donorInfo.postcode}
+                        onChange={(e) => setDonorInfo({ ...donorInfo, postcode: e.target.value })}
+                        className="mt-1"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <Label htmlFor="message">Message (Optional)</Label>
+                    <Textarea
+                      id="message"
+                      value={donorInfo.message}
+                      onChange={(e) => setDonorInfo({ ...donorInfo, message: e.target.value })}
+                      className="mt-1"
+                      rows={3}
+                      placeholder="Share why you're supporting our mission..."
+                    />
+                  </div>
+
+                  <div className="flex gap-3">
+                    <Button
+                      onClick={handlePrevStep}
+                      variant="outline"
+                      size="lg"
+                      className="flex-1"
+                    >
+                      Back
+                    </Button>
+                    <Button
+                      onClick={handleNextStep}
+                      size="lg"
+                      className="flex-1 bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-600 hover:to-amber-600 text-white"
+                    >
+                      Continue to Payment
+                    </Button>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Step 3: Payment */}
+              {currentStep === 3 && (
+                <motion.div
+                  key="step3"
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  exit={{ opacity: 0, x: -20 }}
+                  className="space-y-6"
+                >
+                  <h3 className="font-display font-bold text-2xl text-center mb-6">Choose Payment Method</h3>
+                  
+                  <div className="space-y-4">
+                    <button
+                      onClick={() => handleOtherPayment("Google Pay")}
+                      className="w-full p-6 border-2 border-gray-200 rounded-xl hover:border-orange-300 transition-all text-left group"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-lg">Donate with Google Pay</span>
+                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                          <span className="text-2xl">G</span>
+                        </div>
+                      </div>
+                    </button>
+
+                    <button
+                      onClick={handleMpesaDonate}
+                      className="w-full p-6 bg-gradient-to-r from-green-500 to-emerald-600 rounded-xl hover:from-green-600 hover:to-emerald-700 transition-all text-left text-white shadow-medium"
+                    >
+                      <div className="flex items-center justify-between">
+                        <span className="font-semibold text-lg">Pay with M-Pesa</span>
+                        <div className="w-10 h-10 bg-white rounded-lg flex items-center justify-center shadow-sm">
+                          <span className="text-green-600 font-bold">M</span>
+                        </div>
+                      </div>
+                    </button>
+
+                    <div className="text-center py-2 text-muted-foreground">— OR —</div>
+
+                    <button
+                      onClick={() => handleOtherPayment("Bank Transfer")}
+                      className="w-full p-6 border-2 border-gray-200 rounded-xl hover:border-orange-300 transition-all text-left"
+                    >
+                      <span className="font-semibold text-lg">Bank Transfer</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleOtherPayment("PayPal")}
+                      className="w-full p-6 border-2 border-gray-200 rounded-xl hover:border-orange-300 transition-all text-left"
+                    >
+                      <span className="font-semibold text-lg">PayPal</span>
+                    </button>
+
+                    <button
+                      onClick={() => handleOtherPayment("Physical Donation")}
+                      className="w-full p-6 border-2 border-gray-200 rounded-xl hover:border-orange-300 transition-all text-left"
+                    >
+                      <span className="font-semibold text-lg">Physical Donation</span>
+                    </button>
+                  </div>
+
+                  <Button
+                    onClick={handlePrevStep}
+                    variant="outline"
+                    size="lg"
+                    className="w-full"
+                  >
+                    Back to Details
+                  </Button>
+                </motion.div>
+              )}
+            </Card>
           </div>
         </section>
 
         {/* Commitment Section */}
-        <section className="py-20 bg-muted/30">
+        <section className="py-16 bg-gradient-to-br from-green-50 to-emerald-50">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="text-center"
             >
-              <h2 className="font-display font-bold text-3xl text-foreground mb-6">
+              <Heart className="w-12 h-12 text-green-600 mx-auto mb-4" />
+              <h2 className="font-display font-bold text-3xl text-foreground mb-4">
                 Our Commitment to You
               </h2>
-              <p className="text-lg text-muted-foreground leading-relaxed">
-                We are deeply grateful for the generosity and trust of our supporters. 
-                Your contributions are vital to the growth and impact of our ministry, 
-                and we are committed to using every donation with the utmost care and purpose. 
-                All funds will go directly toward spreading the gospel, supporting outreach programs, 
-                helping those in need, and sustaining the operations that allow us to carry out our mission.
+              <p className="text-muted-foreground text-lg mb-6 leading-relaxed">
+                We are committed to using your donation wisely and transparently. 
+                Every contribution goes directly to empowering women, providing education, 
+                spiritual guidance, and creating lasting transformation in communities across Africa.
               </p>
+              <div className="grid sm:grid-cols-3 gap-4 mt-8">
+                <div className="bg-white p-4 rounded-xl shadow-soft">
+                  <p className="font-semibold text-green-700">100% Secure</p>
+                  <p className="text-sm text-muted-foreground">Encrypted transactions</p>
+                </div>
+                <div className="bg-white p-4 rounded-xl shadow-soft">
+                  <p className="font-semibold text-green-700">Transparent</p>
+                  <p className="text-sm text-muted-foreground">Full accountability</p>
+                </div>
+                <div className="bg-white p-4 rounded-xl shadow-soft">
+                  <p className="font-semibold text-green-700">Impact Reports</p>
+                  <p className="text-sm text-muted-foreground">Regular updates</p>
+                </div>
+              </div>
             </motion.div>
           </div>
         </section>
       </main>
 
-      <MpesaDonation 
+      <Footer />
+      
+      <MpesaDonation
         isOpen={isMpesaModalOpen}
         onClose={() => setIsMpesaModalOpen(false)}
       />
-
-      <Footer />
     </div>
   );
 }

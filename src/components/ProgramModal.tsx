@@ -1,6 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
 import { Button } from "./ui/button";
+import { LucideIcon } from "lucide-react";
+import { useState } from "react";
+import { JoinProgramModal } from "./JoinProgramModal";
 
 interface ProgramModalProps {
   isOpen: boolean;
@@ -16,8 +19,27 @@ interface ProgramModalProps {
 }
 
 export const ProgramModal = ({ isOpen, onClose, program }: ProgramModalProps) => {
+  const [showJoinModal, setShowJoinModal] = useState(false);
+  
+  const programIdMap: Record<string, string> = {
+    "The Daughters Closet": "daughters",
+    "Builder's Parade": "builders",
+    "The Deborah Debate": "deborah",
+    "Mama Help Me Grow": "mama",
+    "The Grey Crown": "grey",
+    "The Rahab Rescue Mission": "rahab",
+    "Tulishe Taifa Program": "tulishe",
+    "The Suitable Village": "village",
+  };
+
+  const handleJoinProgram = () => {
+    onClose();
+    setShowJoinModal(true);
+  };
+
   return (
-    <AnimatePresence>
+    <>
+      <AnimatePresence>
       {isOpen && (
         <>
           {/* Backdrop */}
@@ -83,10 +105,7 @@ export const ProgramModal = ({ isOpen, onClose, program }: ProgramModalProps) =>
                 </div>
                 
                 <Button
-                  onClick={() => {
-                    onClose();
-                    window.location.href = "#join-program";
-                  }}
+                  onClick={handleJoinProgram}
                   size="lg"
                   className="w-full gradient-primary shadow-medium hover:shadow-strong"
                 >
@@ -98,5 +117,12 @@ export const ProgramModal = ({ isOpen, onClose, program }: ProgramModalProps) =>
         </>
       )}
     </AnimatePresence>
+    
+    <JoinProgramModal
+      isOpen={showJoinModal}
+      onClose={() => setShowJoinModal(false)}
+      preSelectedProgram={programIdMap[program.title]}
+    />
+  </>
   );
 };
