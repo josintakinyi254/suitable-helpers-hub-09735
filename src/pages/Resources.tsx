@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { FileText, Download, Calendar, Eye } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function Reports() {
+export default function Resources() {
   const reports = [
     {
       id: 1,
@@ -110,11 +110,10 @@ export default function Reports() {
             >
               <FileText className="w-16 h-16 mx-auto mb-6" />
               <h1 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl mb-6">
-                Reports & Downloads
+                Resources & Reports
               </h1>
               <p className="text-lg sm:text-xl max-w-3xl mx-auto opacity-90">
-                Access our annual reports, financial statements, program evaluations, 
-                and essential documents for transparency and accountability.
+                Access our reports, privacy policy, downloadable forms, and essential documents.
               </p>
             </motion.div>
           </div>
@@ -236,6 +235,74 @@ export default function Reports() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </section>
+
+        {/* Privacy Policy Section */}
+        <section className="py-12 bg-muted/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="font-display font-bold text-3xl text-foreground mb-8">
+                Privacy Policy
+              </h2>
+              
+              <div className="bg-card rounded-2xl shadow-soft p-8 space-y-6">
+                <div>
+                  <h3 className="font-display font-bold text-xl text-foreground mb-3">
+                    Data Collection
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    We collect personal information that you voluntarily provide when registering for programs, 
+                    making donations, or contacting us. This includes names, email addresses, phone numbers, 
+                    and payment information when applicable.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-display font-bold text-xl text-foreground mb-3">
+                    How We Use Your Information
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    Your information is used to process registrations, facilitate donations, send program updates, 
+                    and improve our services. We never sell your personal information to third parties.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-display font-bold text-xl text-foreground mb-3">
+                    Data Security
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    We implement industry-standard security measures to protect your personal information. 
+                    All payment transactions are processed through secure, encrypted channels.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-display font-bold text-xl text-foreground mb-3">
+                    Your Rights
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    You have the right to access, update, or delete your personal information at any time. 
+                    Contact us at thesuitablehelpers@gmail.com for any privacy-related requests.
+                  </p>
+                </div>
+
+                <div>
+                  <h3 className="font-display font-bold text-xl text-foreground mb-3">
+                    Contact Information
+                  </h3>
+                  <p className="text-muted-foreground leading-relaxed">
+                    For questions about this privacy policy, please contact us at thesuitablehelpers@gmail.com 
+                    or call +254 716 514 095.
+                  </p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </section>
 

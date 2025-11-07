@@ -20,12 +20,12 @@ export const Navigation = () => {
 
   const menuItems = [
     { label: "About", href: "/#about", isHash: true },
-    { label: "Programs", href: "/#programs", isHash: true },
-    { label: "Events", href: "/#events", isHash: true },
-    { label: "Shop", href: "/shop", isHash: false },
-    { label: "News", href: "/news", isHash: false },
+    { label: "Programs", href: "/programs", isHash: false },
+    { label: "Contact", href: "/contact", isHash: false },
+    { label: "Resources", href: "/resources", isHash: false },
     { label: "Gallery", href: "/gallery", isHash: false },
-    { label: "Contact", href: "/#contact", isHash: true },
+    { label: "News", href: "/news", isHash: false },
+    { label: "Shop", href: "/shop", isHash: false },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isHash: boolean) => {

@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
 import communityBg from "@/assets/community-bg.jpg";
+import { Loader } from "@/components/Loader";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -19,9 +20,16 @@ export default function ContactUs() {
     subject: "",
     message: "",
   });
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    setIsSubmitting(true);
+
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     const emailBody = `
 Contact Form Submission
@@ -48,6 +56,8 @@ ${formData.message}
       subject: "",
       message: "",
     });
+    
+    setIsSubmitting(false);
   };
 
   return (
@@ -237,9 +247,16 @@ ${formData.message}
                       type="submit"
                       size="lg"
                       className="w-full gradient-primary shadow-medium hover:shadow-strong"
+                      disabled={isSubmitting}
                     >
-                      <Send className="w-5 h-5 mr-2" />
-                      Send Message
+                      {isSubmitting ? (
+                        <Loader text="" size="sm" />
+                      ) : (
+                        <>
+                          <Send className="w-5 h-5 mr-2" />
+                          Send Message
+                        </>
+                      )}
                     </Button>
                   </form>
                 </Card>

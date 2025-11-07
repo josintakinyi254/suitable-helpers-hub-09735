@@ -12,10 +12,12 @@ import { Partners } from "@/components/Partners";
 import { Footer } from "@/components/Footer";
 import { ImpactGallery } from "@/components/ImpactGallery";
 import { TransformingLives } from "@/components/TransformingLives";
+import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const Index = () => {
   return (
     <div className="min-h-screen bg-background">
+      <AnimatedBackground />
       <Navigation />
       <main>
         <Hero />

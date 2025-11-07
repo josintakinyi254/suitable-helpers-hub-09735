@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
+import { Loader } from "./Loader";
 
 interface JoinProgramModalProps {
   isOpen: boolean;
@@ -35,6 +36,8 @@ export const JoinProgramModal = ({ isOpen, onClose, preSelectedProgram }: JoinPr
   const [selectedPrograms, setSelectedPrograms] = useState<string[]>(
     preSelectedProgram ? [preSelectedProgram] : []
   );
+  
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleProgramToggle = (programId: string) => {
     setSelectedPrograms((prev) =>
@@ -44,13 +47,18 @@ export const JoinProgramModal = ({ isOpen, onClose, preSelectedProgram }: JoinPr
     );
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (selectedPrograms.length === 0) {
       toast.error("Please select at least one program");
       return;
     }
+
+    setIsSubmitting(true);
+
+    // Simulate processing delay
+    await new Promise(resolve => setTimeout(resolve, 1000));
 
     const selectedProgramNames = programs
       .filter((p) => selectedPrograms.includes(p.id))
@@ -79,6 +87,7 @@ Please review and process this application.
     
     setFormData({ fullName: "", email: "", phone: "", age: "" });
     setSelectedPrograms([]);
+    setIsSubmitting(false);
     onClose();
   };
 
@@ -175,11 +184,11 @@ Please review and process this application.
 
           {/* Submit Button */}
           <div className="flex gap-3 pt-4">
-            <Button type="button" variant="outline" onClick={onClose} className="flex-1">
+            <Button type="button" variant="outline" onClick={onClose} className="flex-1" disabled={isSubmitting}>
               Cancel
             </Button>
-            <Button type="submit" className="flex-1 gradient-primary">
-              Submit Application
+            <Button type="submit" className="flex-1 gradient-primary" disabled={isSubmitting}>
+              {isSubmitting ? <Loader text="" size="sm" /> : "Submit Application"}
             </Button>
           </div>
         </form>
