@@ -421,6 +421,28 @@ Please process this donation request and send payment instructions.
                       </div>
                     </button>
 
+                    {/* M-Pesa Paybill Details */}
+                    <Card className="bg-green-50 border-green-200 p-6">
+                      <h4 className="font-semibold text-green-800 mb-4 text-center">Send Money / Paybill Details</h4>
+                      <div className="space-y-3">
+                        <div className="flex justify-between items-center bg-white p-3 rounded-lg">
+                          <span className="text-muted-foreground">Paybill Number:</span>
+                          <span className="font-bold text-foreground">247247</span>
+                        </div>
+                        <div className="flex justify-between items-center bg-white p-3 rounded-lg">
+                          <span className="text-muted-foreground">Account Number:</span>
+                          <span className="font-bold text-foreground">SUITABLEHELPERS</span>
+                        </div>
+                        <div className="flex justify-between items-center bg-white p-3 rounded-lg">
+                          <span className="text-muted-foreground">Amount:</span>
+                          <span className="font-bold text-green-700">{currency} {amount || "0"}</span>
+                        </div>
+                      </div>
+                      <p className="text-xs text-green-700 mt-4 text-center">
+                        Use these details to send money directly via M-Pesa
+                      </p>
+                    </Card>
+
                     <div className="text-center py-2 text-muted-foreground">— OR —</div>
 
                     <button

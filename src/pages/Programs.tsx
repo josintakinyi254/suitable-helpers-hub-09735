@@ -146,7 +146,7 @@ export default function Programs() {
         {/* Programs Grid with Testimonials */}
         <section ref={ref} className="py-20 bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="space-y-16">
+            <div className="space-y-24">
               {programs.map((program, index) => (
                 <motion.div
                   key={program.title}

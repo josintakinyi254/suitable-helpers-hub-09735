@@ -9,14 +9,14 @@ export const Partners = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const partners = [
-    { name: "Global Faith Network", category: "Ministry Partner" },
-    { name: "Women Empowerment Initiative", category: "Program Partner" },
-    { name: "Community Health Services", category: "Healthcare Partner" },
-    { name: "Education First Foundation", category: "Education Partner" },
-    { name: "Business Leaders Association", category: "Business Partner" },
-    { name: "Youth Development Trust", category: "Youth Partner" },
-    { name: "Hope & Care Foundation", category: "Charity Partner" },
-    { name: "Skills Training Institute", category: "Training Partner" },
+    { name: "Global Faith Network", logo: "🌍", category: "Ministry Partner" },
+    { name: "Women Empowerment Initiative", logo: "💪", category: "Program Partner" },
+    { name: "Community Health Services", logo: "🏥", category: "Healthcare Partner" },
+    { name: "Education First Foundation", logo: "📚", category: "Education Partner" },
+    { name: "Business Leaders Association", logo: "💼", category: "Business Partner" },
+    { name: "Youth Development Trust", logo: "🌱", category: "Youth Partner" },
+    { name: "Hope & Care Foundation", logo: "❤️", category: "Charity Partner" },
+    { name: "Skills Training Institute", logo: "🎓", category: "Training Partner" },
   ];
 
   return (
@@ -42,21 +42,21 @@ export const Partners = () => {
           </p>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
           {partners.map((partner, index) => (
             <motion.div
               key={partner.name}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={isInView ? { opacity: 1, scale: 1 } : {}}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="bg-card rounded-xl shadow-soft hover:shadow-medium transition-all p-6 border border-border"
+              className="bg-card rounded-2xl shadow-soft hover:shadow-strong transition-all p-8 border border-border group hover:border-primary/30"
             >
               <div className="flex flex-col items-center text-center">
-                <div className="p-4 rounded-full gradient-primary shadow-soft mb-4">
-                  <Handshake className="w-8 h-8 text-white" />
+                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center mb-4 shadow-soft group-hover:scale-110 transition-transform">
+                  <span className="text-4xl">{partner.logo}</span>
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">{partner.name}</h3>
-                <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary">
+                <h3 className="font-semibold text-foreground mb-2 text-lg">{partner.name}</h3>
+                <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-medium">
                   {partner.category}
                 </span>
               </div>

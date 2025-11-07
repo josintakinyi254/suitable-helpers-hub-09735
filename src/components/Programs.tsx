@@ -162,10 +162,10 @@ export const Programs = () => {
         >
           <Button
             size="lg"
-            onClick={() => window.location.href = "#join-program"}
+            onClick={() => window.location.href = "/programs"}
             className="gradient-primary shadow-medium hover:shadow-strong text-lg px-8 py-6"
           >
-            Join A Program
+            Learn More
           </Button>
         </motion.div>
       </div>
