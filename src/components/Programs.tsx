@@ -87,66 +87,54 @@ export const Programs = () => {
   ];
 
   return (
-    <section id="programs" ref={ref} className="py-20 sm:py-32 bg-background relative overflow-hidden">
-      {/* Background Icons */}
-      <Users className="absolute top-10 left-10 w-80 h-80 text-primary/5 -rotate-12" />
-      <Heart className="absolute bottom-10 right-10 w-72 h-72 text-secondary/5 rotate-12" />
-      <Crown className="absolute top-1/2 left-1/4 w-56 h-56 text-accent/5" />
+    <section id="programs" ref={ref} className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-secondary/10 text-secondary font-semibold text-sm mb-4">
+          <h2 className="font-display font-bold text-4xl sm:text-5xl text-foreground mb-4">
             Our Programs
-          </span>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-foreground mb-6">
-            Empowerment Through{" "}
-            <span className="text-gradient">Every Season</span>
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Tailored programs designed to meet women at every stage of life, equipping them with
-            spiritual wisdom and practical skills for Kingdom impact.
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            At Suitable Helpers, we have carefully designed programs that provide a spiritual and empowering message for every stage of life, regardless of age or career.
           </p>
         </motion.div>
 
-        {/* Programs Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {programs.map((program, index) => (
+        {/* Programs Grid - Only first 3 programs */}
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+          {programs.slice(0, 3).map((program, index) => (
             <motion.div
               key={program.title}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              onClick={() => setSelectedProgram(program)}
+              className="cursor-pointer group"
             >
-              <Card 
-                className="group relative overflow-hidden h-80 shadow-soft hover:shadow-strong transition-all duration-300 bg-card border-border cursor-pointer"
-                onClick={() => setSelectedProgram(program)}
-              >
-                {/* Background Image */}
-                <div 
-                  className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-                  style={{ backgroundImage: `url(${program.image})` }}
-                />
-                
-                {/* Gradient Overlay */}
-                <div className={`absolute inset-0 bg-gradient-to-t ${program.color} opacity-60 group-hover:opacity-75 transition-opacity duration-300`} />
-                
-                <div className="relative z-10 h-full flex flex-col justify-end p-6">
-                  {/* Icon */}
-                  <div className="w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center mb-4 shadow-soft group-hover:scale-110 transition-transform duration-300">
-                    <program.icon className="w-7 h-7 text-white" />
-                  </div>
-
-                  {/* Content */}
-                  <h3 className="font-display font-bold text-2xl mb-2 text-white">
+              <Card className="h-full overflow-hidden shadow-soft hover:shadow-strong transition-all duration-300 bg-white border-0 rounded-2xl">
+                <div className="relative h-64 overflow-hidden rounded-t-2xl">
+                  <motion.img
+                    src={program.image}
+                    alt={program.title}
+                    className="w-full h-full object-cover"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.5 }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
+                </div>
+                <div className="p-8 text-center">
+                  <h3 className="font-display font-bold text-2xl text-foreground mb-3">
                     {program.title}
                   </h3>
-                  <p className="text-sm text-white/90 mb-3">{program.age}</p>
-                  <p className="text-xs text-white font-medium">Click to learn more →</p>
+                  <p className="text-muted-foreground leading-relaxed mb-6">
+                    {Array.isArray(program.details) ? program.details.join(', ') : program.details}
+                  </p>
+                  <button className="bg-foreground text-background hover:bg-foreground/90 px-8 py-3 rounded-lg font-medium transition-colors">
+                    LEARN MORE
+                  </button>
                 </div>
               </Card>
             </motion.div>
@@ -157,15 +145,15 @@ export const Programs = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.8 }}
+          transition={{ duration: 0.6, delay: 0.6 }}
           className="text-center"
         >
           <Button
             size="lg"
             onClick={() => window.location.href = "/programs"}
-            className="gradient-primary shadow-medium hover:shadow-strong text-lg px-8 py-6"
+            className="bg-foreground text-background hover:bg-foreground/90 text-lg px-8 py-6 rounded-lg"
           >
-            Learn More
+            View All Programs
           </Button>
         </motion.div>
       </div>
