@@ -1,17 +1,11 @@
 import { Navigation } from "@/components/Navigation";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
-import { CoreValues } from "@/components/CoreValues";
 import { Programs } from "@/components/Programs";
-import { EventBanner } from "@/components/EventBanner";
-import { JoinProgramForm } from "@/components/JoinProgramForm";
-import { Newsletter } from "@/components/Newsletter";
-import { Contact } from "@/components/Contact";
-import { Team } from "@/components/Team";
-import { Partners } from "@/components/Partners";
-import { Footer } from "@/components/Footer";
-import { ImpactGallery } from "@/components/ImpactGallery";
 import { TransformingLives } from "@/components/TransformingLives";
+import { Partners } from "@/components/Partners";
+import { Newsletter } from "@/components/Newsletter";
+import { Footer } from "@/components/Footer";
 import { AnimatedBackground } from "@/components/AnimatedBackground";
 
 const Index = () => {
@@ -21,17 +15,31 @@ const Index = () => {
       <Navigation />
       <main>
         <Hero />
-        <About />
-        <CoreValues />
-        <TransformingLives />
-        <ImpactGallery />
-        <Programs />
-        <EventBanner />
-        <JoinProgramForm />
-        <Newsletter />
-        <Contact />
-        <Team />
-        <Partners />
+        
+        {/* Programs Section with increased spacing */}
+        <div className="py-12">
+          <Programs />
+        </div>
+
+        {/* About Section with cleaner layout */}
+        <div className="py-20">
+          <About />
+        </div>
+
+        {/* Transforming Lives with animations */}
+        <div className="py-20">
+          <TransformingLives />
+        </div>
+
+        {/* Partners Section */}
+        <div className="py-20">
+          <Partners />
+        </div>
+
+        {/* Newsletter */}
+        <div className="py-12">
+          <Newsletter />
+        </div>
       </main>
       <Footer />
     </div>

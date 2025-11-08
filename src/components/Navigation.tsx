@@ -19,7 +19,7 @@ export const Navigation = () => {
   }, []);
 
   const menuItems = [
-    { label: "About", href: "/#about", isHash: true },
+    { label: "About", href: "/about", isHash: false },
     { label: "Programs", href: "/programs", isHash: false },
     { label: "Contact", href: "/contact", isHash: false },
     { label: "Resources", href: "/resources", isHash: false },

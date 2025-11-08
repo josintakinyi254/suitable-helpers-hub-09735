@@ -14,6 +14,7 @@ import Shop from "./pages/Shop";
 import Resources from "./pages/Resources";
 import Gallery from "./pages/Gallery";
 import LearnMore from "./pages/LearnMore";
+import AboutUs from "./pages/AboutUs";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -27,6 +28,7 @@ const App = () => (
         <BrowserRouter>
           <Routes>
             <Route path="/" element={<Index />} />
+            <Route path="/about" element={<AboutUs />} />
             <Route path="/donate" element={<Donate />} />
             <Route path="/programs" element={<Programs />} />
             <Route path="/contact" element={<ContactUs />} />
