@@ -9,21 +9,19 @@ export const Partners = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const partners = [
-    { name: "Global Faith Network", logo: "🌍", category: "Ministry Partner" },
-    { name: "Women Empowerment Initiative", logo: "💪", category: "Program Partner" },
-    { name: "Community Health Services", logo: "🏥", category: "Healthcare Partner" },
-    { name: "Education First Foundation", logo: "📚", category: "Education Partner" },
-    { name: "Business Leaders Association", logo: "💼", category: "Business Partner" },
-    { name: "Youth Development Trust", logo: "🌱", category: "Youth Partner" },
-    { name: "Hope & Care Foundation", logo: "❤️", category: "Charity Partner" },
-    { name: "Skills Training Institute", logo: "🎓", category: "Training Partner" },
+    { name: "Microsoft Partner" },
+    { name: "Salesforce Consulting Partner" },
+    { name: "Webmerge" },
+    { name: "Kentico Bronze Partner" },
+    { name: "Amazon Web Services Partner Network" },
+    { name: "IBM SI Partner" },
+    { name: "Dell Boomi" },
+    { name: "Cloudera Connect" },
+    { name: "Salesforce ISV Partner" },
   ];
 
   return (
-    <section id="partners" ref={ref} className="py-20 sm:py-32 bg-background relative overflow-hidden">
-      {/* Background Icons */}
-      <Handshake className="absolute top-10 right-10 w-72 h-72 text-primary/5 rotate-12" />
-      <Handshake className="absolute bottom-10 left-10 w-64 h-64 text-secondary/5 -rotate-12" />
+    <section id="partners" ref={ref} className="py-20 sm:py-32 bg-background">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
@@ -31,35 +29,24 @@ export const Partners = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <span className="inline-block px-4 py-2 rounded-full bg-primary/10 text-primary font-semibold text-sm mb-4">
+          <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-foreground mb-2">
             Our Partners
-          </span>
-          <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-foreground mb-6">
-            Working <span className="text-gradient">Together</span>
           </h2>
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
-            Collaborating with organizations that share our vision for empowering women and transforming communities.
-          </p>
+          <div className="w-16 h-1 bg-coral mx-auto"></div>
         </motion.div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-5xl mx-auto">
           {partners.map((partner, index) => (
             <motion.div
               key={partner.name}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={isInView ? { opacity: 1, scale: 1 } : {}}
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
               transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="bg-card rounded-2xl shadow-soft hover:shadow-strong transition-all p-8 border border-border group hover:border-primary/30"
+              className="flex items-center justify-center p-8"
             >
-              <div className="flex flex-col items-center text-center">
-                <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-primary/10 to-secondary/10 flex items-center justify-center mb-4 shadow-soft group-hover:scale-110 transition-transform">
-                  <span className="text-4xl">{partner.logo}</span>
-                </div>
-                <h3 className="font-semibold text-foreground mb-2 text-lg">{partner.name}</h3>
-                <span className="text-xs px-3 py-1 rounded-full bg-primary/10 text-primary font-medium">
-                  {partner.category}
-                </span>
-              </div>
+              <h3 className="font-semibold text-foreground text-lg text-center">
+                {partner.name}
+              </h3>
             </motion.div>
           ))}
         </div>
