@@ -1,7 +1,7 @@
 import { Navigation } from "@/components/Navigation";
 import { Footer } from "@/components/Footer";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -13,12 +13,21 @@ import donationBg from "@/assets/donation-bg.jpg";
 import { MpesaDonation } from "@/components/MpesaDonation";
 import { Steps } from "@/components/ui/steps";
 import { toast } from "sonner";
+import { convertCurrency } from "@/utils/currencyConverter";
 
 export default function Donate() {
   const [currentStep, setCurrentStep] = useState(1);
   const [amount, setAmount] = useState("");
   const [currency, setCurrency] = useState("USD");
+  const [baseAmount, setBaseAmount] = useState(0);
   const [isMpesaModalOpen, setIsMpesaModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (baseAmount > 0) {
+      const converted = convertCurrency(baseAmount, "USD", currency);
+      setAmount(converted.toString());
+    }
+  }, [currency, baseAmount]);
   
   const [donorInfo, setDonorInfo] = useState({
     firstName: "",
@@ -31,7 +40,21 @@ export default function Donate() {
     message: "",
   });
 
-  const presetAmounts = [50, 100, 250, 500, 1000];
+  const basePresetAmounts = [50, 100, 250, 500, 1000];
+  const presetAmounts = basePresetAmounts.map(amt => 
+    Math.round(convertCurrency(amt, "USD", currency))
+  );
+
+  const partners = [
+    "PROEL",
+    "Soundking", 
+    "SHURE",
+    "SENNHEISER",
+    "dbx",
+    "Bugera",
+    "Turbosound",
+    "behringer",
+  ];
 
   const steps = [
     { number: 1, label: "Amount" },
@@ -171,7 +194,10 @@ Please process this donation request and send payment instructions.
 
         {/* Multi-Step Donation Form */}
         <section className="py-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-4xl">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="grid lg:grid-cols-[1fr,200px] gap-8 max-w-6xl mx-auto">
+              {/* Main Form */}
+              <div>
             <Card className="p-8 md:p-12 border-4 border-orange-500 rounded-3xl shadow-strong">
               {/* Header */}
               <div className="text-center mb-8">
@@ -217,11 +243,14 @@ Please process this donation request and send payment instructions.
                   <div>
                     <Label className="text-base mb-3 block">Select Amount</Label>
                     <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-                      {presetAmounts.map((preset) => (
+                      {presetAmounts.map((preset, index) => (
                         <button
                           key={preset}
                           type="button"
-                          onClick={() => setAmount(preset.toString())}
+                          onClick={() => {
+                            setBaseAmount(basePresetAmounts[index]);
+                            setAmount(preset.toString());
+                          }}
                           className={`py-4 px-4 rounded-xl font-semibold transition-all border-2 ${
                             amount === preset.toString()
                               ? "bg-gradient-to-r from-orange-500 to-amber-500 text-white border-orange-500 shadow-medium"
@@ -478,6 +507,28 @@ Please process this donation request and send payment instructions.
                 </motion.div>
               )}
             </Card>
+          </div>
+
+          {/* Partner Logos Sidebar */}
+          <div className="hidden lg:block">
+            <div className="sticky top-24 space-y-6">
+              <h3 className="font-semibold text-sm text-muted-foreground mb-4">Our Partners</h3>
+              {partners.map((partner, index) => (
+                <motion.div
+                  key={partner}
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white rounded-lg p-4 shadow-sm border border-gray-100 flex items-center justify-center h-16"
+                >
+                  <span className="text-xs font-semibold text-foreground text-center">
+                    {partner}
+                  </span>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </div>
           </div>
         </section>
 

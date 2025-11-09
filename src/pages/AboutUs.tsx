@@ -92,7 +92,7 @@ export const AboutUs = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6 }}
               viewport={{ once: true }}
-              className="w-full h-96 rounded-2xl overflow-hidden shadow-strong"
+              className="w-full h-[500px] rounded-[60px] overflow-hidden shadow-strong"
             >
               <img 
                 src={founder} 
@@ -128,7 +128,10 @@ export const AboutUs = () => {
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6 }}
                 viewport={{ once: true }}
-                className="w-full h-96 rounded-2xl overflow-hidden shadow-strong"
+                className="w-full h-[450px] overflow-hidden shadow-strong"
+                style={{
+                  clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+                }}
               >
                 <img 
                   src={founder} 
@@ -175,7 +178,7 @@ export const AboutUs = () => {
                   className="group"
                 >
                   <div className="bg-background rounded-lg overflow-hidden shadow-soft hover:shadow-strong transition-all">
-                    <div className="relative h-80 w-full overflow-hidden bg-muted">
+                    <div className="relative h-96 w-full overflow-hidden bg-muted rounded-[40px]">
                       <motion.img
                         src={member.image}
                         alt={member.name}

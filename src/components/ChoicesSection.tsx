@@ -68,14 +68,16 @@ export const ChoicesSection = () => {
             </p>
           </motion.div>
 
-          {/* Right Image */}
+          {/* Right Image with Hexagon Shape */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="relative"
           >
-            <div className="relative h-[600px] rounded-3xl overflow-hidden shadow-strong">
+            <div className="relative h-[600px] overflow-hidden shadow-strong" style={{
+              clipPath: "polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%)",
+            }}>
               <img 
                 src={heroSlide4} 
                 alt="Children smiling" 

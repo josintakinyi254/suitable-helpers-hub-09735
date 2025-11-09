@@ -3,6 +3,9 @@ import { useRef } from "react";
 import transformBefore from "@/assets/transform-before.jpg";
 import gallery2 from "@/assets/gallery-2.jpg";
 import gallery3 from "@/assets/gallery-3.jpg";
+import heroSlide2 from "@/assets/hero-slide-2.jpg";
+import heroSlide3 from "@/assets/hero-slide-3.jpg";
+import heroSlide4 from "@/assets/hero-slide-4.jpg";
 
 export const FundraiserSection = () => {
   const ref = useRef(null);
@@ -38,38 +41,41 @@ export const FundraiserSection = () => {
 
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-16 items-center">
-          {/* Left - Circular Image Arrangement */}
+          {/* Left - Image Arrangement with Different Shapes */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={isInView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8 }}
             className="relative h-[600px]"
           >
-            {/* Large main circle */}
-            <motion.div
-              animate={{ y: [0, -15, 0] }}
-              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute left-0 top-[15%] w-80 h-80 rounded-full overflow-hidden shadow-strong border-8 border-gray-900 z-20"
-            >
-              <img src={transformBefore} alt="Champion for justice" className="w-full h-full object-cover" />
-            </motion.div>
-
-            {/* Top right smaller circle */}
-            <motion.div
-              animate={{ y: [0, 20, 0] }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-              className="absolute right-[10%] top-0 w-48 h-48 rounded-full overflow-hidden shadow-strong border-8 border-white z-30"
-            >
-              <img src={gallery2} alt="Community support" className="w-full h-full object-cover" />
-            </motion.div>
-
-            {/* Bottom left smaller circle */}
+            {/* Large rounded rectangle - left */}
             <motion.div
               animate={{ y: [0, -20, 0] }}
-              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="absolute left-[10%] bottom-[5%] w-44 h-44 rounded-full overflow-hidden shadow-strong border-8 border-white z-10"
+              transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+              className="absolute left-[5%] top-[15%] w-[350px] h-[350px] rounded-[50px] overflow-hidden shadow-strong border-8 border-white z-10"
             >
-              <img src={gallery3} alt="Impact" className="w-full h-full object-cover" />
+              <img src={heroSlide2} alt="Community impact" className="w-full h-full object-cover" />
+            </motion.div>
+
+            {/* Smaller hexagon - top right */}
+            <motion.div
+              animate={{ y: [0, 15, 0] }}
+              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+              className="absolute right-[20%] top-[5%] w-60 h-60 overflow-hidden shadow-strong border-8 border-white z-20"
+              style={{
+                clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+              }}
+            >
+              <img src={heroSlide4} alt="Support" className="w-full h-full object-cover" />
+            </motion.div>
+
+            {/* Medium diamond - bottom */}
+            <motion.div
+              animate={{ y: [0, -15, 0] }}
+              transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="absolute left-[30%] bottom-[10%] w-72 h-72 overflow-hidden shadow-strong border-8 border-white z-15 rotate-45"
+            >
+              <img src={heroSlide3} alt="Transformation" className="w-full h-full object-cover -rotate-45 scale-150" />
             </motion.div>
 
             {/* Decorative green dot */}

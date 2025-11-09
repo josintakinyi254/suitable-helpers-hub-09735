@@ -290,6 +290,85 @@ ${formData.message}
           </div>
         </section>
 
+        {/* Our Offices */}
+        <section className="py-20 bg-muted/30">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="text-center mb-12"
+            >
+              <h2 className="font-display font-bold text-3xl md:text-4xl text-foreground mb-4">
+                Our Offices
+              </h2>
+              <p className="text-muted-foreground max-w-2xl mx-auto">
+                Visit us at any of our office locations across the region
+              </p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 }}
+                viewport={{ once: true }}
+              >
+                <Card className="p-6 text-center h-full">
+                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-lg text-foreground mb-2">Nairobi Office</h3>
+                  <p className="text-sm text-muted-foreground mb-1">Main Headquarters</p>
+                  <p className="text-sm text-muted-foreground">
+                    Nairobi, Kenya<br />
+                    Mon-Fri: 9AM - 5PM
+                  </p>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <Card className="p-6 text-center h-full">
+                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-lg text-foreground mb-2">Mombasa Office</h3>
+                  <p className="text-sm text-muted-foreground mb-1">Coastal Region</p>
+                  <p className="text-sm text-muted-foreground">
+                    Mombasa, Kenya<br />
+                    Mon-Fri: 9AM - 5PM
+                  </p>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                viewport={{ once: true }}
+              >
+                <Card className="p-6 text-center h-full">
+                  <div className="w-14 h-14 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <MapPin className="w-7 h-7 text-primary" />
+                  </div>
+                  <h3 className="font-semibold text-lg text-foreground mb-2">Kisumu Office</h3>
+                  <p className="text-sm text-muted-foreground mb-1">Western Region</p>
+                  <p className="text-sm text-muted-foreground">
+                    Kisumu, Kenya<br />
+                    Mon-Fri: 9AM - 5PM
+                  </p>
+                </Card>
+              </motion.div>
+            </div>
+          </div>
+        </section>
+
         {/* Brief Contact on Index Page Info */}
         <section className="py-16 bg-gradient-to-br from-primary/5 to-secondary/5">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center">

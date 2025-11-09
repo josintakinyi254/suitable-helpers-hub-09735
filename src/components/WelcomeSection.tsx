@@ -85,31 +85,34 @@ export const WelcomeSection = () => {
             </svg>
           </div>
 
-          {/* Large circular image - main focus */}
+          {/* Large rounded rectangle - main focus */}
           <motion.div
             animate={{ y: [0, -20, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute left-[10%] top-[10%] w-96 h-96 rounded-full overflow-hidden shadow-strong border-8 border-white z-10"
+            className="absolute left-[10%] top-[10%] w-[420px] h-[420px] rounded-[60px] overflow-hidden shadow-strong border-8 border-white z-10"
           >
             <img src={transformBefore} alt="Community impact" className="w-full h-full object-cover" />
           </motion.div>
 
-          {/* Top right circular image */}
+          {/* Top right hexagon */}
           <motion.div
             animate={{ y: [0, 15, 0] }}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
-            className="absolute right-[15%] top-[5%] w-56 h-56 rounded-full overflow-hidden shadow-strong border-8 border-white z-20"
+            className="absolute right-[15%] top-[5%] w-64 h-64 overflow-hidden shadow-strong border-8 border-white z-20"
+            style={{
+              clipPath: "polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)",
+            }}
           >
             <img src={gallery1} alt="Support" className="w-full h-full object-cover" />
           </motion.div>
 
-          {/* Bottom left circular image */}
+          {/* Bottom left diamond */}
           <motion.div
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute left-[5%] bottom-[10%] w-48 h-48 rounded-full overflow-hidden shadow-strong border-8 border-white z-5"
+            className="absolute left-[5%] bottom-[10%] w-56 h-56 overflow-hidden shadow-strong border-8 border-white z-5 rotate-45"
           >
-            <img src={transformAfter} alt="Transformation" className="w-full h-full object-cover" />
+            <img src={transformAfter} alt="Transformation" className="w-full h-full object-cover -rotate-45 scale-150" />
           </motion.div>
 
           {/* Decorative green dot */}

@@ -2,6 +2,12 @@ import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 import { Handshake } from "lucide-react";
 import { PartnerSignupModal } from "./PartnerSignupModal";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 export const Partners = () => {
   const ref = useRef(null);
@@ -9,16 +15,23 @@ export const Partners = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const partners = [
-    { name: "Microsoft Partner" },
-    { name: "Salesforce Consulting Partner" },
-    { name: "Webmerge" },
-    { name: "Kentico Bronze Partner" },
-    { name: "Amazon Web Services Partner Network" },
-    { name: "IBM SI Partner" },
-    { name: "Dell Boomi" },
-    { name: "Cloudera Connect" },
-    { name: "Salesforce ISV Partner" },
+    "PROEL",
+    "Soundking",
+    "SHURE",
+    "SENNHEISER",
+    "dbx by HARMAN",
+    "Bugera",
+    "Turbosound",
+    "behringer",
+    "Microsoft Partner",
+    "Salesforce Consulting",
+    "Webmerge",
+    "Kentico Bronze",
   ];
+
+  const plugin = useRef(
+    Autoplay({ delay: 2000, stopOnInteraction: false })
+  );
 
   return (
     <section id="partners" ref={ref} className="py-20 sm:py-32 bg-background">
@@ -29,26 +42,46 @@ export const Partners = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-foreground mb-2">
+          <h2 className="font-display font-bold text-4xl sm:text-5xl md:text-6xl text-foreground mb-4">
             Our Partners
           </h2>
-          <div className="w-16 h-1 bg-coral mx-auto"></div>
+          <div className="w-16 h-1 bg-coral mx-auto mb-8"></div>
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12 max-w-5xl mx-auto">
-          {partners.map((partner, index) => (
-            <motion.div
-              key={partner.name}
-              initial={{ opacity: 0, y: 20 }}
-              animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
-              className="flex items-center justify-center p-8"
-            >
-              <h3 className="font-semibold text-foreground text-lg text-center">
-                {partner.name}
-              </h3>
-            </motion.div>
-          ))}
+        {/* Carousel for Partners */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="max-w-6xl mx-auto"
+        >
+          <Carousel
+            plugins={[plugin.current]}
+            className="w-full"
+            opts={{
+              align: "start",
+              loop: true,
+            }}
+          >
+            <CarouselContent className="-ml-4">
+              {partners.map((partner, index) => (
+                <CarouselItem key={index} className="pl-4 basis-1/2 md:basis-1/3 lg:basis-1/4">
+                  <div className="flex items-center justify-center h-24 px-6">
+                    <h3 className="font-semibold text-foreground text-base md:text-lg text-center">
+                      {partner}
+                    </h3>
+                  </div>
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+          </Carousel>
+        </motion.div>
+
+        {/* Slide indicators */}
+        <div className="flex justify-center gap-2 mt-8">
+          <div className="h-2 w-2 rounded-full bg-gray-300"></div>
+          <div className="h-2 w-2 rounded-full bg-gray-300"></div>
+          <div className="h-2 w-2 rounded-full bg-foreground"></div>
         </div>
 
         <motion.div
@@ -74,11 +107,8 @@ export const Partners = () => {
           </div>
         </motion.div>
       </div>
-      
-      <PartnerSignupModal 
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-      />
+
+      <PartnerSignupModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
     </section>
   );
 };
