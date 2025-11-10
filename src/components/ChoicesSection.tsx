@@ -1,7 +1,11 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Heart, Users, BookOpen, Lightbulb } from "lucide-react";
+import { Heart, Users, BookOpen, Lightbulb, Plus, ChevronLeft, ChevronRight } from "lucide-react";
 import heroSlide4 from "@/assets/hero-slide-4.jpg";
+import gallery1 from "@/assets/gallery-1.jpg";
+import gallery2 from "@/assets/gallery-2.jpg";
+import gallery3 from "@/assets/gallery-3.jpg";
+import gallery4 from "@/assets/gallery-4.jpg";
 
 export const ChoicesSection = () => {
   const ref = useRef(null);
@@ -27,6 +31,21 @@ export const ChoicesSection = () => {
       icon: Lightbulb,
       title: "Development",
       color: "text-yellow-400"
+    }
+  ];
+
+  const priorities = [
+    {
+      title: "Jobs",
+      image: gallery1
+    },
+    {
+      title: "AgriConnect",
+      image: gallery2
+    },
+    {
+      title: "Mission 300",
+      image: gallery3
     }
   ];
 
@@ -86,6 +105,85 @@ export const ChoicesSection = () => {
             </div>
           </motion.div>
         </div>
+
+        {/* Priorities Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 50 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="mt-32"
+        >
+          <div className="flex items-center justify-between mb-12">
+            <h2 className="font-display font-bold text-4xl sm:text-5xl text-foreground">
+              OUR <span className="text-primary">PRIORITIES</span>
+            </h2>
+            <div className="flex gap-2">
+              <button className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all">
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* Small Priority Cards */}
+            {priorities.map((priority, index) => (
+              <motion.div
+                key={priority.title}
+                initial={{ opacity: 0, y: 20 }}
+                animate={isInView ? { opacity: 1, y: 0 } : {}}
+                transition={{ duration: 0.6, delay: 0.5 + index * 0.1 }}
+                className="relative h-[400px] overflow-hidden group cursor-pointer"
+              >
+                <div className="absolute inset-0">
+                  <img 
+                    src={priority.image} 
+                    alt={priority.title}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+                </div>
+                <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between">
+                  <h3 className="text-white font-bold text-2xl">{priority.title}</h3>
+                  <button className="w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-foreground transition-all">
+                    <Plus className="w-5 h-5" />
+                  </button>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Large Featured Card - Health Works */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={isInView ? { opacity: 1, y: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.8 }}
+              className="relative h-[400px] overflow-hidden group cursor-pointer"
+            >
+              <div className="absolute inset-0">
+                <img 
+                  src={gallery4} 
+                  alt="Health Works"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                <h3 className="font-bold text-3xl mb-3">Health Works</h3>
+                <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                  Good health empowers people, creates jobs, and drives economic growth
+                </p>
+                <a href="/programs" className="inline-block text-white font-semibold border-b-2 border-white pb-1 hover:text-white/80 hover:border-white/80 transition-all">
+                  Learn More
+                </a>
+              </div>
+              <button className="absolute top-6 right-6 w-10 h-10 rounded-full border-2 border-white flex items-center justify-center hover:bg-white hover:text-foreground transition-all">
+                <Plus className="w-5 h-5" />
+              </button>
+            </motion.div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );
