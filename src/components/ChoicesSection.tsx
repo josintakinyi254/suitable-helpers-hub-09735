@@ -10,7 +10,9 @@ import gallery4 from "@/assets/gallery-4.jpg";
 export const ChoicesSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
-  const [expandedCard, setExpandedCard] = useState<number>(3); // Health Works is expanded by default
+  const [expandedCard, setExpandedCard] = useState<number>(0); // Jobs is expanded by default
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const cardsPerPage = 4;
 
   const features = [
     {
@@ -38,16 +40,19 @@ export const ChoicesSection = () => {
   const priorities = [
     {
       title: "Jobs",
+      description: "Empowering women through sustainable employment opportunities and entrepreneurship",
       image: gallery1,
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     },
     {
       title: "AgriConnect",
+      description: "Connecting farmers with markets and resources for sustainable agriculture",
       image: gallery2,
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     },
     {
       title: "Mission 300",
+      description: "Reaching 300 communities with life-changing programs and support",
       image: gallery3,
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     },
@@ -56,8 +61,40 @@ export const ChoicesSection = () => {
       description: "Good health empowers people, creates jobs, and drives economic growth",
       image: gallery4,
       videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      title: "Education First",
+      description: "Providing quality education and learning opportunities for all",
+      image: gallery1,
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
+    },
+    {
+      title: "Clean Water",
+      description: "Ensuring access to clean water and sanitation facilities",
+      image: gallery2,
+      videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ"
     }
   ];
+
+  const totalPages = Math.ceil(priorities.length / cardsPerPage);
+  const displayedPriorities = priorities.slice(
+    currentPage * cardsPerPage,
+    (currentPage + 1) * cardsPerPage
+  );
+
+  const handlePrevPage = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+      setExpandedCard(0);
+    }
+  };
+
+  const handleNextPage = () => {
+    if (currentPage < totalPages - 1) {
+      setCurrentPage(currentPage + 1);
+      setExpandedCard(0);
+    }
+  };
 
   const handleCardClick = (index: number) => {
     setExpandedCard(expandedCard === index ? -1 : index);
@@ -132,17 +169,25 @@ export const ChoicesSection = () => {
               OUR <span className="text-primary">PRIORITIES</span>
             </h2>
             <div className="flex gap-2">
-              <button className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all">
+              <button 
+                onClick={handlePrevPage}
+                disabled={currentPage === 0}
+                className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              >
                 <ChevronLeft className="w-6 h-6" />
               </button>
-              <button className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all">
+              <button 
+                onClick={handleNextPage}
+                disabled={currentPage >= totalPages - 1}
+                className="w-12 h-12 rounded-full border-2 border-border flex items-center justify-center hover:bg-primary hover:border-primary hover:text-primary-foreground transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+              >
                 <ChevronRight className="w-6 h-6" />
               </button>
             </div>
           </div>
 
-          <div className="flex gap-4 h-[500px]">
-            {priorities.map((priority, index) => {
+          <div className="flex h-[500px] border-l border-border">
+            {displayedPriorities.map((priority, index) => {
               const isExpanded = expandedCard === index;
               
               return (
@@ -151,10 +196,10 @@ export const ChoicesSection = () => {
                   initial={{ opacity: 0 }}
                   animate={{ 
                     opacity: 1,
-                    flex: isExpanded ? "0 0 66%" : "0 0 calc(33.333% / 3 - 16px)"
+                    flex: isExpanded ? "0 0 70%" : "0 0 10%"
                   }}
                   transition={{ duration: 0.5, ease: "easeInOut" }}
-                  className="relative overflow-hidden cursor-pointer"
+                  className="relative overflow-hidden cursor-pointer border-r border-border"
                 >
                   {!isExpanded ? (
                     // Collapsed Card
@@ -191,11 +236,9 @@ export const ChoicesSection = () => {
                       </div>
                       <div className="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/90 to-transparent">
                         <h3 className="text-white font-bold text-3xl mb-3">{priority.title}</h3>
-                        {priority.description && (
-                          <p className="text-white/90 mb-4 text-sm leading-relaxed">
-                            {priority.description}
-                          </p>
-                        )}
+                        <p className="text-white/90 mb-4 text-sm leading-relaxed">
+                          {priority.description}
+                        </p>
                         <a href="/programs" className="inline-block text-white font-semibold border-b-2 border-white pb-1 hover:text-white/80 hover:border-white/80 transition-all">
                           Learn More
                         </a>
